@@ -1,0 +1,6 @@
+.content {
+    grid-area: content;
+    background-color: #8aabe3;
+    max-width: 100%;
+    padding: 20px;
+}
