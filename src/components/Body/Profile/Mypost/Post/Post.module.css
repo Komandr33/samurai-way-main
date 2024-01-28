@@ -1,0 +1,10 @@
+.post {
+    margin: 10px;
+    color: aliceblue;
+}
+
+.post img {
+    width: 30px;
+    border-radius: 50%;
+    padding-right: 10px;
+}
