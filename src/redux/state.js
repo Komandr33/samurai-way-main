@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {RerenderEntireThree} from "../rerender";
 
 const state = {
     dialogs: {
@@ -30,13 +31,13 @@ const state = {
 export default state;
 
 export const addPost = (value) => {
-    const newPost = {id: v1(), message: value, likes: 0}
-    state.profile.posts.push(newPost)
-    console.log(state.profile.posts)
+    const newPost = {id: v1(), message: value, likes: 0};
+    state.profile.posts.push(newPost);
+    RerenderEntireThree(state);
 }
 
 export const addMessage = (value) => {
-    const newMessage = {id: v1(), message: value}
-    state.dialogs.messages.push(newMessage)
-    console.log(state.dialogs.messages)
+    const newMessage = {id: v1(), message: value};
+    state.dialogs.messages.push(newMessage);
+    RerenderEntireThree(state);
 }
