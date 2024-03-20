@@ -31,3 +31,9 @@
     max-width: 200px;
     border-radius: 5px;
 }
+
+.error {
+    text-align: center;
+    background-color: darkgray;
+    color: red;
+}

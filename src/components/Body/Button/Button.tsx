@@ -1,19 +1,19 @@
 import React, {FC} from 'react';
 
 type propsType = {
+  title: string,
   collBack: () => void
 }
 
-export const Button: FC<propsType> = ({collBack}) => {
+export const Button: FC<propsType> = (props) => {
 
   const onClickHandler = () => {
-    collBack()
+    props.collBack()
   }
-
   return (
     <span>
       <button onClick={onClickHandler}>
-        Send
+        {props.title}
       </button>
     </span>
   )

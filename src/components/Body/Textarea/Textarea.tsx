@@ -1,27 +1,19 @@
-import React, {ChangeEvent, FC, useState} from 'react';
-import {Button} from '../Button/Button';
-import '../../../App.css';
+import React, {ChangeEvent, FC} from 'react';
 
 type propsType = {
+  value: string,
   collBack: (value: string) => void
 }
 
 export const Textarea: FC<propsType> = (props) => {
 
-  const [value, setValue] = useState('')
-
   const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.currentTarget.value)
+    props.collBack(e.currentTarget.value)
   }
 
-  const onclickHandler = () => {
-    props.collBack(value)
-    setValue('')
-  }
   return (
-    <div className={'inputBlock'}>
-      <textarea value={value} onChange={onChangeHandler}/>
-      <Button collBack={onclickHandler}/>
-    </div>
+    <span>
+      <textarea value={props.value} onChange={onChangeHandler}/>
+    </span>
   )
 }
