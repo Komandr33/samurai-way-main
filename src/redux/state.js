@@ -1,7 +1,6 @@
-import {AppPropsType} from "../App";
 import {v1} from "uuid";
 
-export const state = {
+const state = {
     dialogs: {
         dialogs: [
             {id: v1(), name: 'Anna'},
@@ -19,7 +18,6 @@ export const state = {
             {id: v1(), message: 'Yo'},
         ],
     },
-
     profile: {
         posts: [
             {id: v1(), message: 'Hello!!!', likes: 15},
@@ -28,4 +26,17 @@ export const state = {
             {id: v1(), message: 'Be happy!', likes: 5},
         ]
     }
+}
+export default state;
+
+export const addPost = (value) => {
+    const newPost = {id: v1(), message: value, likes: 0}
+    state.profile.posts.push(newPost)
+    console.log(state.profile.posts)
+}
+
+export const addMessage = (value) => {
+    const newMessage = {id: v1(), message: value}
+    state.dialogs.messages.push(newMessage)
+    console.log(state.dialogs.messages)
 }

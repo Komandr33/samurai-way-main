@@ -1,11 +1,20 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-export function Button() {
+type propsType = {
+  collBack: () => void
+}
+
+export const Button: FC<propsType> = ({collBack}) => {
+
+  const onClickHandler = () => {
+    collBack()
+  }
+
   return (
-    <div>
-      <button onClick={() => {}}>
+    <span>
+      <button onClick={onClickHandler}>
         Send
       </button>
-    </div>
+    </span>
   )
 }

@@ -3,7 +3,6 @@ import s from '../Dialogs.module.css';
 import {NavLink} from 'react-router-dom';
 import {DialogType} from '../../../../App';
 
-
 export const Dialog: FC<DialogType> = (props) => {
   const path = `/dialogs/${props.id}`
   return (
