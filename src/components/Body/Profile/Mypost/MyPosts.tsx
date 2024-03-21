@@ -13,6 +13,14 @@ type PostsPropsType = {
 
 export function MyPosts(props: PostsPropsType) {
 
+  // const addPostHandler = () => {    // it's OLD method
+  //   props.addPost(text)
+  // }
+  // let text = ''
+  // const setValue = (v: string) => {
+  //   text = v
+  // }
+
   const [value, setValue] = useState('')
 
   const posts = props.posts.map((p) => <Post key={p.id} message={p.message} likeCounts={p.likes}/>);
@@ -26,6 +34,7 @@ export function MyPosts(props: PostsPropsType) {
       <h2>My posts</h2>
       <div className={'inputBlock'}>
         <Textarea value={value} collBack={setValue}/>
+        {/*<Textarea collBack={setValue}/>  // it's OLD method*/}
         <Button title={'Send post'} collBack={addPostHandler}/>
       </div>
       <div>
