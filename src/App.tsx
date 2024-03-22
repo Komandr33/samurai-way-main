@@ -21,20 +21,23 @@ export type PostType = {
   likes: number
 }
 export type ProfileType = {
-  posts: PostType[]
-}
-export type AppType = {
-  dialogs: DialogsType,
-  profile: ProfileType
+  posts: PostType[],
+  newPostText: string
 }
 export type DialogsType = {
   dialogs: DialogType[],
   messages: MessageType[],
+  newMessageText: string
+}
+export type StateType = {
+  dialogs: DialogsType,
+  profile: ProfileType,
 }
 type AppStateType = {
-  state: AppType,
+  state: StateType,
   addPost: (value: string) => void,
-  addMessage: (value: string) => void
+  addMessage: (value: string) => void,
+  updateText: (id: string, value: string) => void
 }
 
 export const PATH = {
@@ -49,11 +52,12 @@ export const PATH = {
 export const App: FC<AppStateType> = (props) => {
 
   const profile = () => <Profile profile={props.state.profile}
-                                 addPost={props.addPost}/>
+                                 addPost={props.addPost}
+                                 updateText={props.updateText}/>
 
-  const dialogs = () => <Dialogs dialogs={props.state.dialogs.dialogs}
-                                 messages={props.state.dialogs.messages}
-                                 addMessage={props.addMessage}/>
+  const dialogs = () => <Dialogs dialogs={props.state.dialogs}
+                                 addMessage={props.addMessage}
+                                 updateText={props.updateText}/>
 
   return (
     <div className={'app-wrapper'}>

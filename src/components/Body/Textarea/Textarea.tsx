@@ -1,24 +1,35 @@
 import React, {ChangeEvent, FC} from 'react';
 
 type propsType = {
+  id: string,
   value: string,
-  collBack: (value: string) => void
+  collBack: (value: string) => void,
+  buttonTitle: string,
+  updateText: (id: string, value: string) => void
 }
 
 export const Textarea: FC<propsType> = (props) => {
-
   // const newElement: RefObject<HTMLTextAreaElement> = React.createRef();  // it,s OLD method
-  // const onChangeHandler = () => {
-  //   props.collBack(newElement.current?.value || '')
+  // const onClickHandler = () => {
+  //   if (newElement.current?.value) {
+  //     let t = newElement.current?.value
+  //     props.collBack(t)
+  //     newElement.current.value = ''
+  //   }
   // }
+  // const [value, setValue] = useState('')
   const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.collBack(e.currentTarget.value)
+    props.updateText(props.id, e.currentTarget.value)
+  }
+  const onClickHandler = () => {
+    props.collBack(props.value)
   }
 
   return (
     <span>
-      {/*<textarea ref={newElement} onChange={onChangeHandler}/> // it,s OLD method*/}
+      {/*<textarea ref={newElement}/>*/} {/* OLD METHOD*/}
       <textarea value={props.value} onChange={onChangeHandler}/>
+      <button title={props.buttonTitle} onClick={onClickHandler}>{props.buttonTitle}</button>
     </span>
   )
 }

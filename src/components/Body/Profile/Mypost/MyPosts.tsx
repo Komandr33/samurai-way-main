@@ -1,41 +1,30 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {Textarea} from '../../Textarea/Textarea';
-import {PostType} from '../../../../App';
-import {Button} from '../../Button/Button';
-
+import {ProfileType} from '../../../../App';
 
 type PostsPropsType = {
-  posts: Array<PostType>,
-  addPost: (value: string) => void
+  posts: ProfileType,
+  addPost: (value: string) => void,
+  updateText: (id: string, value: string) => void
 }
 
 export function MyPosts(props: PostsPropsType) {
 
-  // const addPostHandler = () => {    // it's OLD method
-  //   props.addPost(text)
-  // }
-  // let text = ''
-  // const setValue = (v: string) => {
-  //   text = v
-  // }
-
-  const [value, setValue] = useState('')
-
-  const posts = props.posts.map((p) => <Post key={p.id} message={p.message} likeCounts={p.likes}/>);
-  const addPostHandler = () => {
-    props.addPost(value)
-    setValue('')
-  }
+  const posts = props.posts.posts.map((p) => <Post key={p.id} message={p.message} likeCounts={p.likes}/>);
 
   return (
     <div className={s.item}>
       <h2>My posts</h2>
       <div className={'inputBlock'}>
-        <Textarea value={value} collBack={setValue}/>
-        {/*<Textarea collBack={setValue}/>  // it's OLD method*/}
-        <Button title={'Send post'} collBack={addPostHandler}/>
+        <Textarea id={'post'}
+                  value={props.posts.newPostText}
+                  updateText={props.updateText}
+                  collBack={props.addPost}
+                  buttonTitle={'Send post'}
+        />
+        {/*<Textarea collBack={setValue}/> /!*/}
       </div>
       <div>
         {posts}

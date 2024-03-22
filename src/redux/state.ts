@@ -1,5 +1,5 @@
-import {v1} from "uuid";
-import {RerenderEntireThree} from "../rerender";
+import {v1} from 'uuid';
+import {RerenderEntireThree} from '../rerender';
 
 const state = {
     dialogs: {
@@ -18,6 +18,7 @@ const state = {
             {id: v1(), message: 'Yo'},
             {id: v1(), message: 'Yo'},
         ],
+        newMessageText: ''
     },
     profile: {
         posts: [
@@ -25,19 +26,32 @@ const state = {
             {id: v1(), message: 'Hello! How, are you?', likes: 20},
             {id: v1(), message: 'GO, GO, GO!!!', likes: 10},
             {id: v1(), message: 'Be happy!', likes: 5},
-        ]
-    }
+        ],
+        newPostText: ''
+    },
+
 }
 export default state;
 
-export const addPost = (value) => {
-    const newPost = {id: v1(), message: value, likes: 0};
-    state.profile.posts.push(newPost);
+export const updateText = (id: string, value: string) => {
+    if (id === 'post') {
+        state.profile.newPostText = value
+    } else if (id === 'dialogs') {
+        state.dialogs.newMessageText = value
+    }
     RerenderEntireThree(state);
 }
 
-export const addMessage = (value) => {
+export const addPost = (value: string) => {
+    const newPost = {id: v1(), message: value, likes: 0};
+    state.profile.posts.push(newPost);
+    state.profile.newPostText = ''
+    RerenderEntireThree(state);
+}
+
+export const addMessage = (value: string) => {
     const newMessage = {id: v1(), message: value};
     state.dialogs.messages.push(newMessage);
+    state.dialogs.newMessageText = ''
     RerenderEntireThree(state);
 }
