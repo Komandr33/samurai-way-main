@@ -1,5 +1,7 @@
 import {v1} from 'uuid';
-import {RerenderEntireThree} from '../rerender';
+import {StateType} from '../App';
+
+let rerenderEntireThree = (state: StateType) => {}
 
 const state = {
     dialogs: {
@@ -39,19 +41,23 @@ export const updateText = (id: string, value: string) => {
     } else if (id === 'dialogs') {
         state.dialogs.newMessageText = value
     }
-    RerenderEntireThree(state);
+    rerenderEntireThree(state);
 }
 
 export const addPost = (value: string) => {
     const newPost = {id: v1(), message: value, likes: 0};
     state.profile.posts.push(newPost);
     state.profile.newPostText = ''
-    RerenderEntireThree(state);
+    rerenderEntireThree(state);
 }
 
 export const addMessage = (value: string) => {
     const newMessage = {id: v1(), message: value};
     state.dialogs.messages.push(newMessage);
     state.dialogs.newMessageText = ''
-    RerenderEntireThree(state);
+    rerenderEntireThree(state);
+}
+
+export const subscribe = (observer: (state: StateType) => void) => {
+    rerenderEntireThree = observer
 }
