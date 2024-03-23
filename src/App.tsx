@@ -10,6 +10,7 @@ import {News} from './components/Body/News/News';
 import {Friends} from './components/Body/Friends/Friends';
 import {Musics} from './components/Body/Musics/Musics';
 import {DialogType} from './components/Body/Dialogs/Dialog/Dialog';
+import {StoreType} from './redux/state';
 
 export type MessageType = {
   id: string,
@@ -33,12 +34,6 @@ export type StateType = {
   dialogs: DialogsType,
   profile: ProfileType,
 }
-type AppStateType = {
-  state: StateType,
-  addPost: (value: string) => void,
-  addMessage: (value: string) => void,
-  updateText: (id: string, value: string) => void
-}
 
 export const PATH = {
   PROFILE: '/profile',
@@ -48,16 +43,20 @@ export const PATH = {
   FRIENDS: '/friends',
   ERROR: '/error'
 }
+type AppPropsType = {
+  store: StoreType
+}
+export const App: FC<AppPropsType> = (props) => {
 
-export const App: FC<AppStateType> = (props) => {
+  const state = props.store.getState()
 
-  const profile = () => <Profile profile={props.state.profile}
-                                 addPost={props.addPost}
-                                 updateText={props.updateText}/>
+  const profile = () => <Profile profile={state.profile}
+                                 addPost={props.store.addPost.bind(props.store)}
+                                 updateText={props.store.updateText.bind(props.store)}/>
 
-  const dialogs = () => <Dialogs dialogs={props.state.dialogs}
-                                 addMessage={props.addMessage}
-                                 updateText={props.updateText}/>
+  const dialogs = () => <Dialogs dialogs={state.dialogs}
+                                 addMessage={props.store.addMessage.bind(props.store)}
+                                 updateText={props.store.updateText.bind(props.store)}/>
 
   return (
     <div className={'app-wrapper'}>
