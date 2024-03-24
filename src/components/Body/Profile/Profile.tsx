@@ -2,11 +2,11 @@ import React from 'react';
 import {MyPosts} from './Mypost/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {ProfileType} from '../../../App';
+import {ActionType} from '../../../redux/state';
 
 type ProfilePropsType = {
   profile: ProfileType,
-  addPost: (value: string) => void,
-  updateText: (id: string, value: string) => void
+  collBack: (action: ActionType) => void,
 }
 
 export function Profile(props: ProfilePropsType) {
@@ -14,7 +14,7 @@ export function Profile(props: ProfilePropsType) {
   return (
     <div>
       <ProfileInfo/>
-      <MyPosts updateText={props.updateText} posts={props.profile} addPost={props.addPost}/>
+      <MyPosts collBack={props.collBack} posts={props.profile}/>
     </div>
   )
 }

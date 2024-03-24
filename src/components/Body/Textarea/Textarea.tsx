@@ -1,11 +1,10 @@
 import React, {ChangeEvent, FC} from 'react';
 
 type propsType = {
-  id: string,
   value: string,
   collBack: (value: string) => void,
   buttonTitle: string,
-  updateText: (id: string, value: string) => void
+  updateText: (value: string) => void
 }
 
 export const Textarea: FC<propsType> = (props) => {
@@ -19,7 +18,7 @@ export const Textarea: FC<propsType> = (props) => {
   // }
   // const [value, setValue] = useState('')
   const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateText(props.id, e.currentTarget.value)
+    props.updateText(e.currentTarget.value)
   }
   const onClickHandler = () => {
     props.collBack(props.value)

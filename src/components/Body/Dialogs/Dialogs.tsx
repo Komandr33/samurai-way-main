@@ -8,7 +8,7 @@ import {DialogsType} from '../../../App';
 type DialogsPropsType = {
   dialogs: DialogsType
   addMessage: (value: string) => void,
-  updateText: (id: string, value: string) => void
+  updateText: (value: string) => void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
@@ -25,8 +25,7 @@ export const Dialogs = (props: DialogsPropsType) => {
         {messageElement}
       </div>
       <div className={'inputBlock'}>
-        <Textarea id={'dialogs'}
-                  value={props.dialogs.newMessageText}
+        <Textarea value={props.dialogs.newMessageText}
                   updateText={props.updateText}
                   collBack={props.addMessage}
                   buttonTitle={'Send message'}

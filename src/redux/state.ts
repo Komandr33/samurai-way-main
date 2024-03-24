@@ -1,21 +1,15 @@
 import {v1} from 'uuid';
 import {StateType} from '../App';
 
-// let rerenderThree = () => {
-//     console.log('hello')
-// }
-// export const subscribe = (observer: () => void) => {
-//     rerenderThree = observer
-// }
-
 export type StoreType = {
     _state: StateType,
-    updateText: (id: string, value: string) => void,
-    addPost: (value: string) => void,
-    addMessage: (value: string) => void,
-    _rerenderThree: () => void,
+    _onChange: () => void,
     subscribe: (observer: () => void) => void,
-    getState: () => StateType
+    getState: () => StateType,
+    dispatch: (action: ActionType) => void
+    // updateText: (id: string, value: string) => void,
+    // addPost: (value: string) => void,
+    // addMessage: (value: string) => void,
 }
 
 export const store: StoreType = {
@@ -49,58 +43,78 @@ export const store: StoreType = {
         },
 
     },
-    updateText(id: string, value: string) {
-        if (id === 'post') {
-            this._state.profile.newPostText = value
-        } else if (id === 'dialogs') {
-            this._state.dialogs.newMessageText = value
-        }
-        this._rerenderThree();
-    },
-    addPost(value: string) {
-        const newPost = {id: v1(), message: value, likes: 0};
-        this._state.profile.posts.push(newPost);
-        this._state.profile.newPostText = ''
-        this._rerenderThree();
-    },
-    addMessage(value: string) {
-        const newMessage = {id: v1(), message: value};
-        this._state.dialogs.messages.push(newMessage);
-        this._state.dialogs.newMessageText = ''
-        this._rerenderThree();
-    },
-    _rerenderThree() {
+    _onChange() {
         console.log('state changed')
     },
+
     subscribe(observer) {
-        this._rerenderThree = observer
+        this._onChange = observer
     },
     getState() {
         return this._state
+    },
+
+    // updateText(id: string, value: string) {
+    //     if (id === 'post') {
+    //         this._state.profile.newPostText = value
+    //     } else if (id === 'dialogs') {
+    //         this._state.dialogs.newMessageText = value
+    //     }
+    //     this._onChange();
+    // },
+    // addPost(value: string) {
+    //     const newPost = {id: v1(), message: value, likes: 0};
+    //     this._state.profile.posts.push(newPost);
+    //     this._state.profile.newPostText = ''
+    //     this._onChange();
+    // },
+    // addMessage(value: string) {
+    //     const newMessage = {id: v1(), message: value};
+    //     this._state.dialogs.messages.push(newMessage);
+    //     this._state.dialogs.newMessageText = ''
+    //     this._onChange();
+    // },
+    dispatch(action: ActionType) {
+        if (action.type === 'UPDATE-TEXT') {
+            if (action.id === 'post') {
+                this._state.profile.newPostText = action.value
+            } else if (action.id === 'dialogs') {
+                this._state.dialogs.newMessageText = action.value
+            }
+            this._onChange();
+        } else if (action.type === 'ADD-POST') {
+            const newPost = {id: v1(), message: this._state.profile.newPostText, likes: 0};
+            this._state.profile.posts.push(newPost);
+            this._state.profile.newPostText = ''
+            this._onChange();
+        } else if (action.type === 'ADD-MESSAGE') {
+            const newMessage = {id: v1(), message: action.value};
+            this._state.dialogs.messages.push(newMessage);
+            this._state.dialogs.newMessageText = ''
+            this._onChange();
+        }
     }
 }
-export default store;
 
-// export const updateText = (id: string, value: string) => {
-//     if (id === 'post') {
-//         state.profile.newPostText = value
-//     } else if (id === 'dialogs') {
-//         state.dialogs.newMessageText = value
-//     }
-//     rerenderThree();
-// }
+export type ActionType =
+  ReturnType<typeof UpdateTextAC>
+  | ReturnType<typeof AddPostAC>
+  | ReturnType<typeof AddMessageAC>
 
-// export const addPost = (value: string) => {
-//     const newPost = {id: v1(), message: value, likes: 0};
-//     state.profile.posts.push(newPost);
-//     state.profile.newPostText = ''
-//     rerenderThree();
-// }
+export const UpdateTextAC = (id: string, value: string) => {
+    return {type: 'UPDATE-TEXT', id, value} as const
+}
+export const AddPostAC = (value: string) => {
+    return {type: 'ADD-POST', value} as const
+}
+export const AddMessageAC = (value: string) => {
+    return {type: 'ADD-MESSAGE', value} as const
+}
 
-// export const addMessage = (value: string) => {
-//     const newMessage = {id: v1(), message: value};
-//     state.dialogs.messages.push(newMessage);
-//     state.dialogs.newMessageText = ''
-//     rerenderThree();
-// }
+// export const dispatchTypes = {
+//     updateText: 'UPDATE-TEXT',
+//     addPost: 'ADD-POST',
+//     addMessage: 'ADD-MESSAGE'
+// } as const
+
 
