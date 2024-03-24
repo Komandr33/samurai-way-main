@@ -52,9 +52,8 @@ export const App: FC<AppPropsType> = (props) => {
   const profile = () => <Profile profile={state.profile}
                                  collBack={props.store.dispatch.bind(props.store)}/>
 
-  // const dialogs = () => <Dialogs dialogs={state.dialogs}
-  //                                addMessage={props.store.addMessage.bind(props.store)}
-  //                                updateText={props.store.updateText.bind(props.store)}/>
+  const dialogs = () => <Dialogs dialogs={state.dialogs}
+                                 collBack={props.store.dispatch.bind(props.store)}/>
 
   return (
     <div className={'app-wrapper'}>
@@ -65,7 +64,7 @@ export const App: FC<AppPropsType> = (props) => {
         {/*  <Redirect to={PATH.ERROR}/>*/}
         {/*</Route>*/}
         <Route path={PATH.PROFILE} render={profile}/>
-        {/*<Route path={PATH.DIALOGS} render={dialogs}/>*/}
+        <Route path={PATH.DIALOGS} render={dialogs}/>
         <Route path={PATH.NEWS} render={News}/>
         <Route path={PATH.MUSICS} render={Musics}/>
         <Route path={PATH.FRIENDS} render={Friends}/>

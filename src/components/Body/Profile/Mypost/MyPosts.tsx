@@ -3,7 +3,7 @@ import s from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {Textarea} from '../../Textarea/Textarea';
 import {ProfileType} from '../../../../App';
-import {ActionType, AddPostAC, UpdateTextAC} from '../../../../redux/state';
+import {ActionType, addPostAC, updateTextAC} from '../../../../redux/state';
 
 type PostsPropsType = {
   posts: ProfileType,
@@ -13,10 +13,10 @@ type PostsPropsType = {
 export function MyPosts(props: PostsPropsType) {
 
   const addPostHandler = (v: string) => {
-    props.collBack(AddPostAC(v))
+    props.collBack(addPostAC(v))
   }
   const updateTextHandler = (v: string) => {
-    props.collBack(UpdateTextAC('post', v))
+    props.collBack(updateTextAC('post', v))
   }
   const posts = props.posts.posts.map((p) => <Post key={p.id} message={p.message} likeCounts={p.likes}/>);
 

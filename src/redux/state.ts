@@ -97,24 +97,19 @@ export const store: StoreType = {
 }
 
 export type ActionType =
-  ReturnType<typeof UpdateTextAC>
-  | ReturnType<typeof AddPostAC>
-  | ReturnType<typeof AddMessageAC>
+  ReturnType<typeof updateTextAC>
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof addMessageAC>
 
-export const UpdateTextAC = (id: string, value: string) => {
+export const updateTextAC = (id: string, value: string) => {
     return {type: 'UPDATE-TEXT', id, value} as const
 }
-export const AddPostAC = (value: string) => {
+export const addPostAC = (value: string) => {
     return {type: 'ADD-POST', value} as const
 }
-export const AddMessageAC = (value: string) => {
+export const addMessageAC = (value: string) => {
     return {type: 'ADD-MESSAGE', value} as const
 }
 
-// export const dispatchTypes = {
-//     updateText: 'UPDATE-TEXT',
-//     addPost: 'ADD-POST',
-//     addMessage: 'ADD-MESSAGE'
-// } as const
 
 
