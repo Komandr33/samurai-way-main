@@ -12,8 +12,8 @@ type PostsPropsType = {
 
 export function MyPosts(props: PostsPropsType) {
 
-  const addPostHandler = (v: string) => {
-    props.collBack(addPostAC(v))
+  const addPostHandler = () => {
+    props.collBack(addPostAC())
   }
   const updateTextHandler = (v: string) => {
     props.collBack(updateTextAC('post', v))

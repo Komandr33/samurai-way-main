@@ -15,8 +15,8 @@ export const Dialogs = (props: DialogsPropsType) => {
 
   const dialogElement = props.dialogs.dialogs.map(el => <Dialog key={el.id} name={el.name} id={el.id}/>)
   const messageElement = props.dialogs.messages.map(el => <Message key={el.id} message={el.message}/>)
-  const addMessageHandler = (v: string) => {
-    props.collBack(addMessageAC(v))
+  const addMessageHandler = () => {
+    props.collBack(addMessageAC())
   }
   const updateTextHandler = (v: string) => {
     props.collBack(updateTextAC('dialogs', v))

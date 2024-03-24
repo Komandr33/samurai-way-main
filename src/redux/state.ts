@@ -74,24 +74,48 @@ export const store: StoreType = {
     //     this._state.dialogs.newMessageText = ''
     //     this._onChange();
     // },
+    // dispatch(action: ActionType) {
+    //     if (action.type === 'UPDATE-TEXT') {
+    //         if (action.id === 'post') {
+    //             this._state.profile.newPostText = action.value
+    //         } else if (action.id === 'dialogs') {
+    //             this._state.dialogs.newMessageText = action.value
+    //         }
+    //         this._onChange();
+    //     } else if (action.type === 'ADD-POST') {
+    //         const newPost = {id: v1(), message: this._state.profile.newPostText, likes: 0};
+    //         this._state.profile.posts.push(newPost);
+    //         this._state.profile.newPostText = ''
+    //         this._onChange();
+    //     } else if (action.type === 'ADD-MESSAGE') {
+    //         const newMessage = {id: v1(), message: action.value};
+    //         this._state.dialogs.messages.push(newMessage);
+    //         this._state.dialogs.newMessageText = ''
+    //         this._onChange();
+    //     }
+    // }
     dispatch(action: ActionType) {
-        if (action.type === 'UPDATE-TEXT') {
-            if (action.id === 'post') {
-                this._state.profile.newPostText = action.value
-            } else if (action.id === 'dialogs') {
-                this._state.dialogs.newMessageText = action.value
-            }
-            this._onChange();
-        } else if (action.type === 'ADD-POST') {
-            const newPost = {id: v1(), message: this._state.profile.newPostText, likes: 0};
-            this._state.profile.posts.push(newPost);
-            this._state.profile.newPostText = ''
-            this._onChange();
-        } else if (action.type === 'ADD-MESSAGE') {
-            const newMessage = {id: v1(), message: action.value};
-            this._state.dialogs.messages.push(newMessage);
-            this._state.dialogs.newMessageText = ''
-            this._onChange();
+        switch (action.type) {
+            case 'UPDATE-TEXT':
+                if (action.id === 'post') {
+                    this._state.profile.newPostText = action.value
+                } else if (action.id === 'dialogs') {
+                    this._state.dialogs.newMessageText = action.value
+                }
+                this._onChange();
+                break
+            case 'ADD-POST':
+                const newPost = {id: v1(), message: this._state.profile.newPostText, likes: 0};
+                this._state.profile.posts.push(newPost);
+                this._state.profile.newPostText = ''
+                this._onChange();
+                break;
+            case 'ADD-MESSAGE':
+                const newMessage = {id: v1(), message: this._state.dialogs.newMessageText};
+                this._state.dialogs.messages.push(newMessage);
+                this._state.dialogs.newMessageText = ''
+                this._onChange();
+                break;
         }
     }
 }
@@ -104,12 +128,9 @@ export type ActionType =
 export const updateTextAC = (id: string, value: string) => {
     return {type: 'UPDATE-TEXT', id, value} as const
 }
-export const addPostAC = (value: string) => {
-    return {type: 'ADD-POST', value} as const
-}
-export const addMessageAC = (value: string) => {
-    return {type: 'ADD-MESSAGE', value} as const
-}
+export const addPostAC = () => ({type: 'ADD-POST'}) as const
+export const addMessageAC = () => ({type: 'ADD-MESSAGE'}) as const
+
 
 
 

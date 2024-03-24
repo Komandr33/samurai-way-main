@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {ChangeEvent, FC, KeyboardEvent} from 'react';
 
 type propsType = {
   value: string,
@@ -23,11 +23,15 @@ export const Textarea: FC<propsType> = (props) => {
   const onClickHandler = () => {
     props.collBack(props.value)
   }
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') props.collBack(props.value)
+
+  }
 
   return (
     <span>
       {/*<textarea ref={newElement}/>*/} {/* OLD METHOD*/}
-      <textarea value={props.value} onChange={onChangeHandler}/>
+      <textarea value={props.value} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
       <button title={props.buttonTitle} onClick={onClickHandler}>{props.buttonTitle}</button>
     </span>
   )
