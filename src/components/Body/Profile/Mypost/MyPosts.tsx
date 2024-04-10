@@ -3,7 +3,10 @@ import s from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {Textarea} from '../../Textarea/Textarea';
 import {ProfileType} from '../../../../App';
-import {ActionType, addPostAC, updateTextAC} from '../../../../redux/state';
+import {addPostAC} from '../../../../redux/profile-reducer';
+import {updateTextAC} from '../../../../redux/dialogs-reducer';
+import {ActionType} from '../../../../redux/store';
+
 
 type PostsPropsType = {
   posts: ProfileType,

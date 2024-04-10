@@ -4,7 +4,9 @@ import {Dialog} from './Dialog/Dialog';
 import {Message} from './Messages/Message';
 import {Textarea} from '../Textarea/Textarea';
 import {DialogsType} from '../../../App';
-import {ActionType, addMessageAC, updateTextAC} from '../../../redux/state';
+import {ActionType} from '../../../redux/store';
+import {addMessageAC, updateTextAC} from '../../../redux/dialogs-reducer';
+
 
 type DialogsPropsType = {
   dialogs: DialogsType
