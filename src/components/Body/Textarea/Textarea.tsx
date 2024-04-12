@@ -25,7 +25,6 @@ export const Textarea: FC<propsType> = (props) => {
   }
   const onKeyDownHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') props.collBack(props.value)
-
   }
 
   return (

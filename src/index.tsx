@@ -1,14 +1,14 @@
 import React from 'react';
 import './index.css';
-import {store} from './redux/store';
 import App from './App';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
+import store from './redux/store-redux';
 
 export const rerenderEntireThree = () => {
   ReactDOM.render(
     <BrowserRouter>
-      <App store={store}/>
+      <App/>
     </BrowserRouter>, document.getElementById('root')
   );
 };

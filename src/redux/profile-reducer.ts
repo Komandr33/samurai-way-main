@@ -2,9 +2,17 @@ import {ProfileType} from '../App';
 import {v1} from 'uuid';
 import {ActionType} from './store';
 
+const initialState = {
+  posts: [
+    {id: v1(), message: 'Hello!!!', likes: 15},
+    {id: v1(), message: 'Hello! How, are you?', likes: 20},
+    {id: v1(), message: 'GO, GO, GO!!!', likes: 10},
+    {id: v1(), message: 'Be happy!', likes: 5},
+  ],
+  newPostText: ''
+}
 
-
-export const profileReducer = (state: ProfileType, action: ActionType) => {
+export const profileReducer = (state: ProfileType = initialState, action: ActionType) => {
   switch (action.type) {
     case 'UPDATE-TEXT':
       if (action.id === 'post') {

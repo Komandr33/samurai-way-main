@@ -11,6 +11,7 @@ import {Friends} from './components/Body/Friends/Friends';
 import {Musics} from './components/Body/Musics/Musics';
 import {DialogType} from './components/Body/Dialogs/Dialog/Dialog';
 import {StoreType} from './redux/store';
+import store from './redux/store-redux';
 
 export type MessageType = {
   id: string,
@@ -43,17 +44,17 @@ export const PATH = {
   FRIENDS: '/friends',
   ERROR: '/error'
 }
-type AppPropsType = {
-  store: StoreType
-}
-export const App: FC<AppPropsType> = (props) => {
-  const state = props.store.getState()
+// type AppPropsType = {
+//   store: StoreType
+// }
+export const App = () => {
+  const state = store.getState()
 
   const profile = () => <Profile profile={state.profile}
-                                 collBack={props.store.dispatch.bind(props.store)}/>
+                                 collBack={store.dispatch.bind(store)}/>
 
   const dialogs = () => <Dialogs dialogs={state.dialogs}
-                                 collBack={props.store.dispatch.bind(props.store)}/>
+                                 collBack={store.dispatch.bind(store)}/>
 
   return (
     <div className={'app-wrapper'}>

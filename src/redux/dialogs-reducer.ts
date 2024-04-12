@@ -2,9 +2,28 @@ import {DialogsType} from '../App';
 import {v1} from 'uuid';
 import {ActionType} from './store';
 
-export type dialogsReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addMessageAC>
+// export type dialogsReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addMessageAC>
 
-export const dialogsReducer = (state: DialogsType, action: ActionType) => {
+const initialState = {
+  dialogs: [
+    {id: v1(), name: 'Anna'},
+    {id: v1(), name: 'Ivan'},
+    {id: v1(), name: 'Artem'},
+    {id: v1(), name: 'Alexey'},
+    {id: v1(), name: 'Andrey'},
+    {id: v1(), name: 'Oleg'},
+  ],
+  messages: [
+    {id: v1(), message: 'Hello! How are you?'},
+    {id: v1(), message: 'Hello'},
+    {id: v1(), message: 'Yo'},
+    {id: v1(), message: 'Yo'},
+    {id: v1(), message: 'Yo'},
+  ],
+  newMessageText: ''
+}
+
+export const dialogsReducer = (state: DialogsType = initialState, action: ActionType) => {
   switch (action.type) {
     case 'UPDATE-TEXT':
       if (action.id === 'dialogs') {
