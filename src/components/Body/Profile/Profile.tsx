@@ -1,8 +1,8 @@
 import React from 'react';
-import {MyPosts} from './Mypost/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {ProfileType} from '../../../App';
 import {ActionType} from '../../../redux/store';
+import MyPostsContainer from './Mypost/MyPostsContainer';
 
 
 type ProfilePropsType = {
@@ -15,7 +15,7 @@ export function Profile(props: ProfilePropsType) {
   return (
     <div>
       <ProfileInfo/>
-      <MyPosts collBack={props.collBack} posts={props.profile}/>
+      <MyPostsContainer/>
     </div>
   )
 }

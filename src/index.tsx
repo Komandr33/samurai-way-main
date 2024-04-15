@@ -4,15 +4,16 @@ import App from './App';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import store from './redux/store-redux';
+import {Provider} from 'react-redux';
 
 export const rerenderEntireThree = () => {
   ReactDOM.render(
     <BrowserRouter>
-      <App/>
+      <Provider store={store}>
+        <App/>
+      </Provider>
     </BrowserRouter>, document.getElementById('root')
   );
 };
 
 rerenderEntireThree();
-
-store.subscribe(rerenderEntireThree)
