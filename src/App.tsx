@@ -1,17 +1,16 @@
-import React, {FC} from 'react';
+import React from 'react';
 import './App.css';
 import {Navbar} from './components/Body/Navbar/Navbar';
 import {Header} from './components/Header/Header';
 import {Profile} from './components/Body/Profile/Profile';
 import {Footer} from './components/Footer/Footer';
-import {Dialogs} from './components/Body/Dialogs/Dialogs';
 import {Route} from 'react-router-dom';
 import {News} from './components/Body/News/News';
 import {Friends} from './components/Body/Friends/Friends';
 import {Musics} from './components/Body/Musics/Musics';
 import {DialogType} from './components/Body/Dialogs/Dialog/Dialog';
-import {StoreType} from './redux/store';
 import store from './redux/store-redux';
+import {DialogsContainer} from './components/Body/Dialogs/DialogsContainer';
 
 export type MessageType = {
   id: string,
@@ -53,8 +52,7 @@ export const App = () => {
   const profile = () => <Profile profile={state.profile}
                                  collBack={store.dispatch.bind(store)}/>
 
-  const dialogs = () => <Dialogs dialogs={state.dialogs}
-                                 collBack={store.dispatch.bind(store)}/>
+  const dialogs = () => <DialogsContainer/>
 
   return (
     <div className={'app-wrapper'}>

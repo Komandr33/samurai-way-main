@@ -5,10 +5,9 @@ import {connect} from 'react-redux';
 import {MyPosts} from './MyPosts';
 import store from '../../../../redux/store-redux';
 
-let state = store.getState()
 
-const mapStateToProps = (state: any) => {
-
+const mapStateToProps = () => {
+  let state = store.getState()
   return {
     posts: state.profile
   }
@@ -25,6 +24,4 @@ const mapDispatchToProps = () => {
   }
 }
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
-
-export default MyPostsContainer;
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)

@@ -6,14 +6,11 @@ import {BrowserRouter} from 'react-router-dom';
 import store from './redux/store-redux';
 import {Provider} from 'react-redux';
 
-export const rerenderEntireThree = () => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <App/>
-      </Provider>
-    </BrowserRouter>, document.getElementById('root')
-  );
-};
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  </BrowserRouter>, document.getElementById('root')
+);
 
-rerenderEntireThree();

@@ -4,24 +4,24 @@ import {Dialog} from './Dialog/Dialog';
 import {Message} from './Messages/Message';
 import {Textarea} from '../Textarea/Textarea';
 import {DialogsType} from '../../../App';
-import {ActionType} from '../../../redux/store';
-import {addMessageAC, updateTextAC} from '../../../redux/dialogs-reducer';
 
 
 type DialogsPropsType = {
   dialogs: DialogsType
-  collBack: (action: ActionType) => void
+  addMessage: () => void
+  updateText: (v: string) => void
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
 
   const dialogElement = props.dialogs.dialogs.map(el => <Dialog key={el.id} name={el.name} id={el.id}/>)
   const messageElement = props.dialogs.messages.map(el => <Message key={el.id} message={el.message}/>)
+
   const addMessageHandler = () => {
-    props.collBack(addMessageAC())
+    props.addMessage()
   }
   const updateTextHandler = (v: string) => {
-    props.collBack(updateTextAC('dialogs', v))
+    props.updateText(v)
   }
 
   return (
