@@ -3,7 +3,8 @@ import {v1} from 'uuid';
 export type usersReducerType =
   ReturnType<typeof updateFollowedAC> |
   ReturnType<typeof updateUserStatusAC> |
-  ReturnType<typeof updateUserLocationAC>
+  ReturnType<typeof updateUserLocationAC> |
+  ReturnType<typeof addUserAC>
 
 type LocationType = {
   city: string
@@ -36,9 +37,18 @@ export const usersReducer = (state: UsersType[] = initialState, action: usersRed
     case 'UPDATE-USER-STATUS':
       return state.map(u => u.id === action.id ? {...u, status: action.value} : u)
     case 'UPDATE-LOCATION':
-      let user = {...state.find(u => u.id === action.id)}
-      let newLocation = {...user.location, city: action.cityValue, country: action.countryValue}
+      const user = {...state.find(u => u.id === action.id)}
+      const newLocation = {...user.location, city: action.cityValue, country: action.countryValue}
       return state.map(u => u.id === action.id ? {...u, location: newLocation} : u)
+    case 'ADD-USER':
+      const newUser = {
+        id: action.id,
+        followed: false,
+        userName: action.userName,
+        status: action.statusValue,
+        location: {city: action.cityValue, country: action.countryValue}
+      }
+      return [...state, newUser]
     default :
       return state
   }
@@ -52,4 +62,15 @@ export const updateUserStatusAC = (id: string, value: string) => {
 }
 export const updateUserLocationAC = (id: string, cityValue: string, countryValue: string) => {
   return {type: 'UPDATE-LOCATION', id, cityValue, countryValue} as const
+}
+
+export const addUserAC = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
+  return {
+    type: 'ADD-USER',
+    id: v1(),
+    userName,
+    statusValue,
+    cityValue,
+    countryValue
+  } as const
 }

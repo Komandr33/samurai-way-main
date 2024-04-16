@@ -1,23 +1,21 @@
-import {v1} from 'uuid';
-import {StateType} from '../App';
-import {addPostAC, profileReducer} from './profile-reducer';
-import {addMessageAC, dialogsReducer, updateTextAC} from './dialogs-reducer';
+import {addPostAC} from './profile-reducer';
+import {addMessageAC, updateTextAC} from './dialogs-reducer';
 
-export type ActionType =
-  ReturnType<typeof addPostAC>
-  | ReturnType<typeof addMessageAC>
-  | ReturnType<typeof updateTextAC>
+// export type ActionType =
+//   ReturnType<typeof addPostAC>
+//   | ReturnType<typeof addMessageAC>
+//   | ReturnType<typeof updateTextAC>
 
-export type StoreType = {
-    _state: StateType,
-    _onChange: () => void,
-    subscribe: (observer: () => void) => void,
-    getState: () => StateType,
-    dispatch: (action: ActionType) => void
-    // updateText: (id: string, value: string) => void,
-    // addPost: (value: string) => void,
-    // addMessage: (value: string) => void,
-};
+// export type StoreType = {
+//     _state: StateType,
+//     _onChange: () => void,
+//     subscribe: (observer: () => void) => void,
+//     getState: () => StateType,
+//     dispatch: (action: ActionType) => void
+//     // updateText: (id: string, value: string) => void,
+//     // addPost: (value: string) => void,
+//     // addMessage: (value: string) => void,
+// };
 
 // export const store: StoreType = {
 //     _state: {
