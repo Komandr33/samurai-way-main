@@ -1,6 +1,12 @@
-import {ProfileType} from '../App';
+import {PostType} from '../App';
 import {v1} from 'uuid';
-import {ActionType} from './store';
+
+export type ProfileType = {
+  posts: PostType[],
+  newPostText: string
+}
+
+type ProfileReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addPostAC>
 
 const initialState = {
   posts: [
@@ -12,7 +18,7 @@ const initialState = {
   newPostText: ''
 }
 
-export const profileReducer = (state: ProfileType = initialState, action: ActionType) => {
+export const profileReducer = (state: ProfileType = initialState, action: ProfileReducerType) => {
   switch (action.type) {
     case 'UPDATE-TEXT':
       if (action.id === 'post') {

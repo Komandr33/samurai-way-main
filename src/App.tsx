@@ -8,9 +8,9 @@ import {Route} from 'react-router-dom';
 import {News} from './components/Body/News/News';
 import {Friends} from './components/Body/Friends/Friends';
 import {Musics} from './components/Body/Musics/Musics';
-import {DialogType} from './components/Body/Dialogs/Dialog/Dialog';
-import store from './redux/store-redux';
 import {DialogsContainer} from './components/Body/Dialogs/DialogsContainer';
+import {DialogsType} from './redux/dialogs-reducer';
+import {ProfileType} from './redux/profile-reducer';
 
 export type MessageType = {
   id: string,
@@ -20,15 +20,6 @@ export type PostType = {
   id: string,
   message: string,
   likes: number
-}
-export type ProfileType = {
-  posts: PostType[],
-  newPostText: string
-}
-export type DialogsType = {
-  dialogs: DialogType[],
-  messages: MessageType[],
-  newMessageText: string
 }
 export type StateType = {
   dialogs: DialogsType,
@@ -43,15 +34,14 @@ export const PATH = {
   FRIENDS: '/friends',
   ERROR: '/error'
 }
+
 // type AppPropsType = {
 //   store: StoreType
 // }
+
 export const App = () => {
-  const state = store.getState()
 
-  const profile = () => <Profile profile={state.profile}
-                                 collBack={store.dispatch.bind(store)}/>
-
+  const profile = () => <Profile/>
   const dialogs = () => <DialogsContainer/>
 
   return (

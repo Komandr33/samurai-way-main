@@ -1,8 +1,13 @@
-import {DialogsType} from '../App';
+import {MessageType} from '../App';
 import {v1} from 'uuid';
-import {ActionType} from './store';
+import {DialogType} from '../components/Body/Dialogs/Dialog/Dialog';
 
-// export type dialogsReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addMessageAC>
+export type DialogsType = {
+  dialogs: DialogType[],
+  messages: MessageType[],
+  newMessageText: string
+}
+export type DialogsReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addMessageAC>
 
 const initialState = {
   dialogs: [
@@ -23,7 +28,7 @@ const initialState = {
   newMessageText: ''
 }
 
-export const dialogsReducer = (state: DialogsType = initialState, action: ActionType) => {
+export const dialogsReducer = (state: DialogsType = initialState, action: DialogsReducerType) => {
   switch (action.type) {
     case 'UPDATE-TEXT':
       if (action.id === 'dialogs') {
