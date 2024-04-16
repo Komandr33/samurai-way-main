@@ -4,7 +4,8 @@ export type usersReducerType =
   ReturnType<typeof updateFollowedAC> |
   ReturnType<typeof updateUserStatusAC> |
   ReturnType<typeof updateUserLocationAC> |
-  ReturnType<typeof addUserAC>
+  ReturnType<typeof addUserAC> |
+  ReturnType<typeof deleteUserAC>
 
 type LocationType = {
   city: string
@@ -49,6 +50,8 @@ export const usersReducer = (state: UsersType[] = initialState, action: usersRed
         location: {city: action.cityValue, country: action.countryValue}
       }
       return [...state, newUser]
+    case 'DELETE-USER':
+      return state.filter(u => u.id !== action.id)
     default :
       return state
   }
@@ -63,7 +66,6 @@ export const updateUserStatusAC = (id: string, value: string) => {
 export const updateUserLocationAC = (id: string, cityValue: string, countryValue: string) => {
   return {type: 'UPDATE-LOCATION', id, cityValue, countryValue} as const
 }
-
 export const addUserAC = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
   return {
     type: 'ADD-USER',
@@ -73,4 +75,7 @@ export const addUserAC = (userName: string, statusValue: string, cityValue: stri
     cityValue,
     countryValue
   } as const
+}
+export const deleteUserAC = (id: string) => {
+  return {type: 'DELETE-USER', id} as const
 }
