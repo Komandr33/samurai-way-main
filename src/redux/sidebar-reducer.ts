@@ -1,5 +1,3 @@
-import {StoreType} from './store';
-
 const initialState = null
 
 export type sidebarReducerType = {

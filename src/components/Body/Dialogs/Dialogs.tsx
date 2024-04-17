@@ -3,7 +3,8 @@ import s from './Dialogs.module.css'
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Messages/Message';
 import {Textarea} from '../Textarea/Textarea';
-import {DialogsType} from '../../../App';
+import {DialogsType} from '../../../redux/dialogs-reducer';
+
 
 
 type DialogsPropsType = {

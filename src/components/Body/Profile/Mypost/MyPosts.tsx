@@ -2,7 +2,7 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {Textarea} from '../../Textarea/Textarea';
-import {ProfileType} from '../../../../App';
+import {ProfileType} from '../../../../redux/profile-reducer';
 
 type PostsPropsType = {
   posts: ProfileType

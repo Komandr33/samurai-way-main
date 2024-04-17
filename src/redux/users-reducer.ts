@@ -5,7 +5,8 @@ export type usersReducerType =
   ReturnType<typeof updateUserStatusAC> |
   ReturnType<typeof updateUserLocationAC> |
   ReturnType<typeof addUserAC> |
-  ReturnType<typeof deleteUserAC>
+  ReturnType<typeof deleteUserAC> |
+  ReturnType<typeof setUserAC>
 
 type LocationType = {
   city: string
@@ -19,28 +20,47 @@ export type UsersType = {
   location: LocationType
 }
 
-const initialState = [
-  {id: v1(), followed: true, userName: 'Andrey', status: 'i\'m Boss', location: {city: 'Krasnodar', country: 'Russia'}},
-  {id: v1(), followed: false, userName: 'Dmitriy', status: 'i\'m Boss', location: {city: 'Baku', country: 'Georgia'}},
-  {
-    id: v1(),
-    followed: true,
-    userName: 'James Bond',
-    status: 'i\'m Boss',
-    location: {city: 'London', country: 'Britany'}
-  },
-]
+type UsersStateType = {
+  users: UsersType[]
+}
 
-export const usersReducer = (state: UsersType[] = initialState, action: usersReducerType): UsersType[] => {
+const initialState = {
+  users: [
+    {
+      id: v1(),
+      followed: true,
+      userName: 'Andrey',
+      status: 'i\'m Boss',
+      location: {city: 'Krasnodar', country: 'Russia'}
+    },
+    {
+      id: v1(),
+      followed: false,
+      userName: 'Dmitriy',
+      status: 'i\'m Boss',
+      location: {city: 'Baku', country: 'Georgia'}
+    },
+    {
+      id: v1(),
+      followed: true,
+      userName: 'James Bond',
+      status: 'i\'m Boss',
+      location: {city: 'London', country: 'Britany'}
+    },
+  ]
+}
+
+export const usersReducer = (state: UsersStateType = initialState, action: usersReducerType): UsersStateType => {
   switch (action.type) {
-    case 'UPDATE-FOLLOWED':
-      return state.map(u => u.id === action.id ? {...u, followed: !u.followed} : u)
+    case 'TOGGLE-FOLLOWED':
+      // return state.map(u => u.id === action.id ? {...u, followed: !u.followed} : u)
+      return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: !u.followed} : u)}
     case 'UPDATE-USER-STATUS':
-      return state.map(u => u.id === action.id ? {...u, status: action.value} : u)
+      return {...state, users: state.users.map(u => u.id === action.id ? {...u, status: action.value} : u)}
     case 'UPDATE-LOCATION':
-      const user = {...state.find(u => u.id === action.id)}
+      const user = {...state.users.find(u => u.id === action.id)}
       const newLocation = {...user.location, city: action.cityValue, country: action.countryValue}
-      return state.map(u => u.id === action.id ? {...u, location: newLocation} : u)
+      return {...state, users: state.users.map(u => u.id === action.id ? {...u, location: newLocation} : u)}
     case 'ADD-USER':
       const newUser = {
         id: action.id,
@@ -49,16 +69,18 @@ export const usersReducer = (state: UsersType[] = initialState, action: usersRed
         status: action.statusValue,
         location: {city: action.cityValue, country: action.countryValue}
       }
-      return [...state, newUser]
+      return {...state, users: [...state.users, newUser]}
     case 'DELETE-USER':
-      return state.filter(u => u.id !== action.id)
+      return {...state, users: state.users.filter(u => u.id !== action.id)}
+    case 'SET-USER':
+      return {...state, users: [...state.users, ...action.users]}
     default :
       return state
   }
 }
 
 export const updateFollowedAC = (id: string) => {
-  return {type: 'UPDATE-FOLLOWED', id} as const
+  return {type: 'TOGGLE-FOLLOWED', id} as const
 }
 export const updateUserStatusAC = (id: string, value: string) => {
   return {type: 'UPDATE-USER-STATUS', id, value} as const
@@ -78,4 +100,7 @@ export const addUserAC = (userName: string, statusValue: string, cityValue: stri
 }
 export const deleteUserAC = (id: string) => {
   return {type: 'DELETE-USER', id} as const
+}
+export const setUserAC = (users: UsersType[]) => {
+  return {type: 'SET-USER', users} as const
 }
