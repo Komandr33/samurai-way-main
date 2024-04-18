@@ -11,6 +11,7 @@ import {Musics} from './components/Body/Musics/Musics';
 import {DialogsContainer} from './components/Body/Dialogs/DialogsContainer';
 import {DialogsType} from './redux/dialogs-reducer';
 import {ProfileType} from './redux/profile-reducer';
+import {UsersContainer} from './components/Body/Users/UsersContainer';
 
 export type MessageType = {
   id: string,
@@ -32,6 +33,7 @@ export const PATH = {
   NEWS: '/news',
   MUSICS: '/musics',
   FRIENDS: '/friends',
+  USERS: '/users',
   ERROR: '/error'
 }
 
@@ -57,6 +59,7 @@ export const App = () => {
         <Route path={PATH.NEWS} render={News}/>
         <Route path={PATH.MUSICS} render={Musics}/>
         <Route path={PATH.FRIENDS} render={Friends}/>
+        <Route path={PATH.USERS} render={UsersContainer}/>
         {/*<Route path={PATH.ERROR} render={Error404}/>*/}
       </div>
       <Footer/>

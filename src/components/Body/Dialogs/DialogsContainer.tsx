@@ -5,10 +5,10 @@ import store from '../../../redux/store-redux';
 import {addMessageAC, updateTextAC} from '../../../redux/dialogs-reducer';
 
 
-const mapStateToProps = () => {
-  let state = store.getState()
+const mapStateToProps = (state: any) => {
+  // let state = store.getState()
   return {
-    dialogs: state.dialogs
+    dialogs: state.dialogsPage
   }
 }
 const mapDispatchToProps = () => {

@@ -5,9 +5,9 @@ import {usersReducer} from './users-reducer';
 
 const reducers = combineReducers(
   {
-    profile: profileReducer,
-    dialogs: dialogsReducer,
-    users: usersReducer
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+    usersPage: usersReducer
     // sidebar: sidebarReducer
   });
 const store = createStore(reducers);

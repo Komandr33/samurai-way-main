@@ -18,7 +18,10 @@ export function Navbar() {
         <NavLink to="/musics" activeClassName={s.activeLink}>Music</NavLink>
       </div>
       <div className={s.item}>
-        <p><NavLink to="/friends" activeClassName={s.activeLink}>Friends</NavLink></p>
+        <NavLink to="/friends" activeClassName={s.activeLink}>Friends</NavLink>
+      </div>
+      <div className={s.item}>
+        <NavLink to="/users" activeClassName={s.activeLink}>Users</NavLink>
       </div>
     </nav>
   )
