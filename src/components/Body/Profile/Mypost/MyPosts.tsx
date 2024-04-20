@@ -2,10 +2,10 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {Textarea} from '../../Textarea/Textarea';
-import {ProfileType} from '../../../../redux/profile-reducer';
+import {ProfileStateType} from '../../../../redux/profile-reducer';
 
 type PostsPropsType = {
-  posts: ProfileType
+  posts: ProfileStateType
   // collBack: (action: ActionType) => void
   addPost: () => void
   updateText: (v: string) => void

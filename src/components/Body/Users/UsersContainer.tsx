@@ -1,5 +1,7 @@
 import {connect} from 'react-redux';
 import {Users} from './Users';
+import {AppPropsType} from '../../../redux/store-redux';
+import {Dispatch} from 'redux';
 import {
   addUserAC,
   deleteUserAC,
@@ -7,18 +9,35 @@ import {
   toggleFollowedAC,
   updateUserLocationAC,
   updateUserStatusAC,
-  UsersType
+  UsersStateType,
+  UserType
 } from '../../../redux/users-reducer';
 
-const mapStateToProps = (state: any) => {
+
+type MapStateToPropsType = {
+  usersPage: UsersStateType
+}
+
+type MapDispatchToPropsType = {
+  setUser: (users: UserType[]) => void
+  addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
+  deleteUsers: (id: string) => void
+  toggleFollowed: (id: string) => void
+  updateUserStatus: (id: string, value: string) => void
+  updateUserLocation: (id: string, cityValue: string, countryValue: string) => void
+}
+
+export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: AppPropsType): MapStateToPropsType => {
   return {
-    users: state.usersPage
+    usersPage: state.users
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
   return {
-    setUser: (users: UsersType[]) => {
+    setUser: (users: UserType[]) => {
       dispatch(setUserAC(users))
     },
     addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
@@ -30,7 +49,7 @@ const mapDispatchToProps = (dispatch: any) => {
     toggleFollowed: (id: string) => {
       dispatch(toggleFollowedAC(id))
     },
-    updateUserStatusAC: (id: string, value: string) => {
+    updateUserStatus: (id: string, value: string) => {
       dispatch(updateUserStatusAC(id, value))
     },
     updateUserLocation: (id: string, cityValue: string, countryValue: string) => {

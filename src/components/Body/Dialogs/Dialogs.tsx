@@ -5,8 +5,6 @@ import {Message} from './Messages/Message';
 import {Textarea} from '../Textarea/Textarea';
 import {DialogsType} from '../../../redux/dialogs-reducer';
 
-
-
 type DialogsPropsType = {
   dialogs: DialogsType
   addMessage: () => void

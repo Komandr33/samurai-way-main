@@ -1,6 +1,7 @@
 import {v1} from 'uuid';
+import user_avatar from '../img/user_avatar.jpg'
 
-export type usersReducerType =
+type UsersReducerType =
   ReturnType<typeof setUserAC> |
   ReturnType<typeof addUserAC> |
   ReturnType<typeof deleteUserAC> |
@@ -12,22 +13,22 @@ type LocationType = {
   city: string
   country: string
 }
-export type UsersType = {
+export type UserType = {
   id: string
+  avatar: string
   followed: boolean
   userName: string
   status: string
   location: LocationType
 }
 
-type UsersStateType = {
-  users: UsersType[]
-}
+export type UsersStateType = typeof usersState
 
-const initialState = {
+const usersState = {
   users: [
     {
       id: v1(),
+      avatar: user_avatar,
       followed: true,
       userName: 'Andrey',
       status: 'i\'m Boss',
@@ -35,6 +36,7 @@ const initialState = {
     },
     {
       id: v1(),
+      avatar: user_avatar,
       followed: false,
       userName: 'Dmitriy',
       status: 'i\'m Boss',
@@ -42,21 +44,23 @@ const initialState = {
     },
     {
       id: v1(),
+      avatar: user_avatar,
       followed: true,
       userName: 'James Bond',
       status: 'i\'m Boss',
       location: {city: 'London', country: 'Britany'}
     },
-  ]
+  ] as UserType[]
 }
 
-export const usersReducer = (state: UsersStateType = initialState, action: usersReducerType): UsersStateType => {
+export function usersReducer(state: UsersStateType = usersState, action: UsersReducerType): UsersStateType {
   switch (action.type) {
     case 'SET-USER':
       return {...state, users: [...state.users, ...action.users]}
     case 'ADD-USER':
       const newUser = {
         id: action.id,
+        avatar: user_avatar,
         followed: false,
         userName: action.userName,
         status: action.statusValue,
@@ -78,7 +82,7 @@ export const usersReducer = (state: UsersStateType = initialState, action: users
   }
 }
 
-export const setUserAC = (users: UsersType[]) => {
+export const setUserAC = (users: UserType[]) => {
   return {type: 'SET-USER', users} as const
 }
 export const addUserAC = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {

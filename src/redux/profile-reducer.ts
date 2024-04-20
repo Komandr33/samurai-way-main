@@ -1,24 +1,26 @@
-import {PostType} from '../App';
 import {v1} from 'uuid';
 
-export type ProfileType = {
-  posts: PostType[],
-  newPostText: string
+type PostType = {
+  id: string
+  message: string
+  likes: number
 }
 
 type ProfileReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addPostAC>
 
-const initialState = {
+export type ProfileStateType = typeof ProfileState
+
+const ProfileState = {
   posts: [
     {id: v1(), message: 'Hello!!!', likes: 15},
     {id: v1(), message: 'Hello! How, are you?', likes: 20},
     {id: v1(), message: 'GO, GO, GO!!!', likes: 10},
     {id: v1(), message: 'Be happy!', likes: 5},
-  ],
+  ] as PostType[],
   newPostText: ''
 }
 
-export const profileReducer = (state: ProfileType = initialState, action: ProfileReducerType) => {
+export function profileReducer(state: ProfileStateType = ProfileState, action: ProfileReducerType): ProfileStateType {
   switch (action.type) {
     case 'UPDATE-TEXT':
       if (action.id === 'post') {

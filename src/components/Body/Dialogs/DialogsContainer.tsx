@@ -1,23 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Dialogs} from './Dialogs';
-import store from '../../../redux/store-redux';
 import {addMessageAC, updateTextAC} from '../../../redux/dialogs-reducer';
 
-
 const mapStateToProps = (state: any) => {
-  // let state = store.getState()
   return {
     dialogs: state.dialogsPage
   }
 }
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     addMessage: () => {
-      store.dispatch(addMessageAC())
+      dispatch(addMessageAC())
     },
     updateText: (v: string) => {
-      store.dispatch(updateTextAC('dialogs', v))
+      dispatch(updateTextAC('dialogs', v))
     }
   }
 }
