@@ -3,18 +3,13 @@ import s from './Dialogs.module.css'
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Messages/Message';
 import {Textarea} from '../Textarea/Textarea';
-import {DialogsType} from '../../../redux/dialogs-reducer';
+import {DialogsPropsType} from './DialogsContainer';
 
-type DialogsPropsType = {
-  dialogs: DialogsType
-  addMessage: () => void
-  updateText: (v: string) => void
-}
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-  const dialogElement = props.dialogs.dialogs.map(el => <Dialog key={el.id} name={el.name} id={el.id}/>)
-  const messageElement = props.dialogs.messages.map(el => <Message key={el.id} message={el.message}/>)
+  const dialogElement = props.dialogsPage.dialogs.map(el => <Dialog key={el.id} name={el.name} id={el.id}/>)
+  const messageElement = props.dialogsPage.messages.map(el => <Message key={el.id} message={el.message}/>)
 
   const addMessageHandler = () => {
     props.addMessage()
@@ -32,7 +27,7 @@ export const Dialogs = (props: DialogsPropsType) => {
         {messageElement}
       </div>
       <div className={'inputBlock'}>
-        <Textarea value={props.dialogs.newMessageText}
+        <Textarea value={props.dialogsPage.newMessageText}
                   updateText={updateTextHandler}
                   collBack={addMessageHandler}
                   buttonTitle={'Send message'}

@@ -13,11 +13,11 @@ import {
   UserType
 } from '../../../redux/users-reducer';
 
+export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 type MapStateToPropsType = {
   usersPage: UsersStateType
 }
-
 type MapDispatchToPropsType = {
   setUser: (users: UserType[]) => void
   addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
@@ -27,7 +27,6 @@ type MapDispatchToPropsType = {
   updateUserLocation: (id: string, cityValue: string, countryValue: string) => void
 }
 
-export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const mapStateToProps = (state: AppPropsType): MapStateToPropsType => {
   return {

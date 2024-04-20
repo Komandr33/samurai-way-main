@@ -6,19 +6,23 @@ import {MyPosts} from './MyPosts';
 import {Dispatch} from 'redux';
 import {AppPropsType} from '../../../../redux/store-redux';
 
+export type MyPostsPropsType = MapStateToPropsType & mapDispatchToPropsType
+
 type MapStateToPropsType = {
   postsPage: ProfileStateType,
-  newPostText: string
+}
+type mapDispatchToPropsType = {
+  addPost: () => void
+  updateText: (v: string) => void
 }
 
 const mapStateToProps = (state: AppPropsType): MapStateToPropsType => {
   return {
-    postsPage: state.profile,
-    newPostText: state.profile.newPostText
+    postsPage: state.profile
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
   return {
     addPost: () => {
       dispatch(addPostAC())

@@ -2,16 +2,9 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {Textarea} from '../../Textarea/Textarea';
-import {ProfileStateType} from '../../../../redux/profile-reducer';
+import {MyPostsPropsType} from './MyPostsContainer';
 
-type PostsPropsType = {
-  posts: ProfileStateType
-  // collBack: (action: ActionType) => void
-  addPost: () => void
-  updateText: (v: string) => void
-}
-
-export function MyPosts(props: PostsPropsType) {
+export function MyPosts(props: MyPostsPropsType) {
 
   const addPostHandler = () => {
     props.addPost()
@@ -20,7 +13,7 @@ export function MyPosts(props: PostsPropsType) {
     props.updateText(v)
   }
 
-  const posts = props.posts.posts.map((p) =>
+  const posts = props.postsPage.posts.map((p) =>
     <Post
       key={p.id}
       message={p.message}
@@ -31,7 +24,7 @@ export function MyPosts(props: PostsPropsType) {
     <div className={s.item}>
       <h2>My posts</h2>
       <div className={'inputBlock'}>
-        <Textarea value={props.posts.newPostText}
+        <Textarea value={props.postsPage.newPostText}
                   updateText={updateTextHandler}
                   collBack={addPostHandler}
                   buttonTitle={'Send post'}

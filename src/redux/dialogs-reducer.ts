@@ -2,17 +2,11 @@ import {MessageType} from '../App';
 import {v1} from 'uuid';
 import {DialogType} from '../components/Body/Dialogs/Dialog/Dialog';
 
-export type DialogsType = {
-  dialogs: DialogType[],
-  messages: MessageType[],
-  newMessageText: string
-}
-
 export type DialogsReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addMessageAC>
 
-export type DialogsStateType = typeof initialState
+export type DialogsStateType = typeof DialogsState
 
-const initialState = {
+const DialogsState = {
   dialogs: [
     {id: v1(), name: 'Anna'},
     {id: v1(), name: 'Ivan'},
@@ -31,7 +25,7 @@ const initialState = {
   newMessageText: ''
 }
 
-export const dialogsReducer = (state: DialogsStateType = initialState, action: DialogsReducerType): DialogsStateType => {
+export const dialogsReducer = (state: DialogsStateType = DialogsState, action: DialogsReducerType): DialogsStateType => {
   switch (action.type) {
     case 'UPDATE-TEXT':
       if (action.id === 'dialogs') {

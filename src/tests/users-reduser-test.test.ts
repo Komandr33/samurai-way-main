@@ -1,4 +1,4 @@
-import {initialState, toggleFollowedAC, usersReducer} from '../redux/users-reducer';
+import {toggleFollowedAC, usersReducer} from '../redux/users-reducer';
 import user_avatar from '../img/user_avatar.jpg';
 
 test('toggle followed', () => {
