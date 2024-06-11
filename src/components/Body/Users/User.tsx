@@ -8,14 +8,12 @@ type UserPropsType = {
 }
 export const User = (props: UserPropsType) => {
 
-  // const user = {...props.user}
-
   return (
     <div>
-      <img src={user_avatar} alt={'avatar'}/>
+      <img src={props.user.photos.small || user_avatar} alt={'avatar'}/>
       <div>
-        <div>{props.user.userName}</div>
-        <div>{props.user.status}</div>
+        <div>{props.user.name}</div>
+        {/*<div>{props.user.status}</div>*/}
         <div>
           <button className={''} onClick={() => {
           }}>
@@ -26,11 +24,10 @@ export const User = (props: UserPropsType) => {
           <button className={''} onClick={() => {
             props.toggleFollowed(props.user.id)
           }}>
-          {!props.user.followed ? 'Добавить в друзья' : 'Удалить из друзей'}
-        </button>
+            {!props.user.followed ? 'Добавить в друзья' : 'Удалить из друзей'}
+          </button>
+        </div>
       </div>
     </div>
-</div>
-)
-  ;
+  );
 };
