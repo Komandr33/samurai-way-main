@@ -1,5 +1,5 @@
 import React from 'react';
-import user_avatar from '../../../img/user_avatar.jpg';
+import user_avatar from '../../../asstets/images/user_avatar.jpg';
 import {UserType} from '../../../redux/users-reducer';
 
 type UserPropsType = {

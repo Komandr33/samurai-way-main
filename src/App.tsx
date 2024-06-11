@@ -9,7 +9,7 @@ import {News} from './components/Body/News/News';
 import {Friends} from './components/Body/Friends/Friends';
 import {Musics} from './components/Body/Musics/Musics';
 import {DialogsContainer} from './components/Body/Dialogs/DialogsContainer';
-import {UsersContainer} from './components/Body/Users/UsersContainer';
+import UsersContainer from './components/Body/Users/UsersContainer';
 
 export type MessageType = {
   id: string,

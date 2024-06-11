@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import user_avatar from '../img/user_avatar.jpg'
+import user_avatar from '../asstets/images/user_avatar.jpg'
 
 type UsersReducerType =
   ReturnType<typeof setUserAC> |
@@ -9,37 +9,13 @@ type UsersReducerType =
   ReturnType<typeof updateUserStatusAC> |
   ReturnType<typeof updateUserLocationAC> |
   ReturnType<typeof setTotalCountAC> |
-  ReturnType<typeof setCurrentPageAC>
-
+  ReturnType<typeof setCurrentPageAC> |
+  ReturnType<typeof changeIsFetchingAC>
 
 type PhotosType = {
   small: string | null
   large: string | null
 }
-// "items": [
-//   {
-//     "name": "Shubert",
-//     "id": 1,
-//     "photos": {
-//       "small": null,
-//       "large": null
-//     },
-//     "status": null,
-//     "followed": false
-//   },
-//   {
-//     "name": "Hacker",
-//     "id": 2,
-//     "photos": {
-//       "small": null,
-//       "large": null
-//     },
-//     "status": null,
-//     "followed": false
-//   }
-// ],
-//   "totalCount": 30,
-//   "error": null
 
 export type UserType = {
   name: string
@@ -54,8 +30,9 @@ export type UsersStateType = typeof usersState
 const usersState = {
   users: [] as UserType[],
   pageSize: 100,
-  totalCount: 19,
-  currentPage: 1
+  totalCount: 0,
+  currentPage: 1,
+  isFetching: true
 }
 
 export function usersReducer(state: UsersStateType = usersState, action: UsersReducerType): UsersStateType {
@@ -80,7 +57,9 @@ export function usersReducer(state: UsersStateType = usersState, action: UsersRe
     case  'SET-TOTAL-COUNT':
       return {...state, totalCount: action.count}
     case 'SET-CURRENT-PAGE':
-      return {...state, currentPage: action.currentPage }
+      return {...state, currentPage: action.currentPage}
+    case 'CHANGE-IS-FETCHING':
+      return {...state, isFetching: action.isFetching}
     // case 'UPDATE-LOCATION':
     //   const user = {...state.users.find(u => u.id === action.id)}
     //   const newLocation = {...user.location, city: action.cityValue, country: action.countryValue}
@@ -119,5 +98,8 @@ export const setTotalCountAC = (count: number) => {
 }
 export const setCurrentPageAC = (currentPage: number) => {
   return {type: 'SET-CURRENT-PAGE', currentPage} as const
+}
+export const changeIsFetchingAC = (isFetching: boolean) => {
+  return {type: 'CHANGE-IS-FETCHING', isFetching} as const
 }
 
