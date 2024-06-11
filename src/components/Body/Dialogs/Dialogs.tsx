@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Messages/Message';
-import {Textarea} from '../Textarea/Textarea';
+import {Textarea} from '../../Textarea/Textarea';
 import {DialogsPropsType} from './DialogsContainer';
 
 

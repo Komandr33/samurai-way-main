@@ -9,3 +9,28 @@
     border-radius: 50%;
     padding-right: 10px;
 }
+
+.switcher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    color: black;
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.switcher:hover {
+    cursor: pointer;
+}
+.selected {
+    font-weight: bold;
+    color: #ffffff;
+    cursor: default;
+}
+
+.forBack:hover {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}

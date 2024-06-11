@@ -1,23 +1,27 @@
 import {connect} from 'react-redux';
-import {Users} from './Users';
 import {AppPropsType} from '../../../redux/store-redux';
 import {Dispatch} from 'redux';
 import {
   addUserAC,
-  deleteUserAC,
+  deleteUserAC, setCurrentPageAC,
+  setTotalCountAC,
   setUserAC,
   toggleFollowedAC,
   updateUserLocationAC,
-  updateUserStatusAC,
-  UsersStateType,
+  updateUserStatusAC, UsersStateType,
   UserType
 } from '../../../redux/users-reducer';
+import {Users} from './Users';
 
-export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
+export type UsersPropsType = UsersStateType & MapDispatchToPropsType
 
-type MapStateToPropsType = {
-  usersPage: UsersStateType
+export type MapStateToPropsType = {
+  users: UserType[],
+  pageSize: number,
+  totalCount: number,
+  currentPage: number
 }
+
 type MapDispatchToPropsType = {
   setUser: (users: UserType[]) => void
   addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
@@ -25,12 +29,16 @@ type MapDispatchToPropsType = {
   toggleFollowed: (id: string) => void
   updateUserStatus: (id: string, value: string) => void
   updateUserLocation: (id: string, cityValue: string, countryValue: string) => void
+  setTotalCount: (count: number) => void
+  setCurrentPage: (pageNumber: number) => void
 }
 
-
-const mapStateToProps = (state: AppPropsType): MapStateToPropsType => {
+const mapStateToProps = (state: AppPropsType): UsersStateType => {
   return {
-    usersPage: state.users
+    users: state.usersPage.users,
+    pageSize: state.usersPage.pageSize,
+    totalCount: state.usersPage.totalCount,
+    currentPage: state.usersPage.currentPage
   }
 }
 
@@ -53,6 +61,12 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     },
     updateUserLocation: (id: string, cityValue: string, countryValue: string) => {
       dispatch(updateUserLocationAC(id, cityValue, countryValue))
+    },
+    setTotalCount: (count: number) => {
+      dispatch(setTotalCountAC(count))
+    },
+    setCurrentPage: (pageNumber: number) => {
+      dispatch(setCurrentPageAC(pageNumber))
     }
   }
 }
