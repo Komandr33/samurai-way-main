@@ -1,4 +1,4 @@
-import {addPostAC} from './profile-reducer';
+import {addPost} from './profile-reducer';
 import {addMessageAC, updateTextAC} from './dialogs-reducer';
 
 // export type ActionType =

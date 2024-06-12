@@ -2,15 +2,15 @@ import {v1} from 'uuid';
 import user_avatar from '../asstets/images/user_avatar.jpg'
 
 type UsersReducerType =
-  ReturnType<typeof setUserAC> |
-  ReturnType<typeof addUserAC> |
-  ReturnType<typeof deleteUserAC> |
-  ReturnType<typeof toggleFollowedAC> |
-  ReturnType<typeof updateUserStatusAC> |
-  ReturnType<typeof updateUserLocationAC> |
-  ReturnType<typeof setTotalCountAC> |
-  ReturnType<typeof setCurrentPageAC> |
-  ReturnType<typeof changeIsFetchingAC>
+  ReturnType<typeof setUser> |
+  ReturnType<typeof addUser> |
+  ReturnType<typeof deleteUser> |
+  ReturnType<typeof toggleFollowed> |
+  ReturnType<typeof updateUserStatus> |
+  ReturnType<typeof updateUserLocation> |
+  ReturnType<typeof setTotalCount> |
+  ReturnType<typeof setCurrentPage> |
+  ReturnType<typeof changeIsFetching>
 
 type PhotosType = {
   small: string | null
@@ -69,10 +69,10 @@ export function usersReducer(state: UsersStateType = usersState, action: UsersRe
   }
 }
 
-export const setUserAC = (users: UserType[]) => {
+export const setUser = (users: UserType[]) => {
   return {type: 'SET-USER', users} as const
 }
-export const addUserAC = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
+export const addUser = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
   return {
     type: 'ADD-USER',
     id: v1(),
@@ -81,25 +81,25 @@ export const addUserAC = (userName: string, statusValue: string, cityValue: stri
     countryValue
   } as const
 }
-export const deleteUserAC = (id: string) => {
+export const deleteUser = (id: string) => {
   return {type: 'DELETE-USER', id} as const
 }
-export const toggleFollowedAC = (id: string) => {
+export const toggleFollowed = (id: string) => {
   return {type: 'TOGGLE-FOLLOWED', id} as const
 }
-export const updateUserStatusAC = (id: string, value: string) => {
+export const updateUserStatus = (id: string, value: string) => {
   return {type: 'UPDATE-USER-STATUS', id, value} as const
 }
-export const updateUserLocationAC = (id: string, cityValue: string, countryValue: string) => {
+export const updateUserLocation = (id: string, cityValue: string, countryValue: string) => {
   return {type: 'UPDATE-LOCATION', id, cityValue, countryValue} as const
 }
-export const setTotalCountAC = (count: number) => {
+export const setTotalCount = (count: number) => {
   return {type: 'SET-TOTAL-COUNT', count} as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
   return {type: 'SET-CURRENT-PAGE', currentPage} as const
 }
-export const changeIsFetchingAC = (isFetching: boolean) => {
+export const changeIsFetching = (isFetching: boolean) => {
   return {type: 'CHANGE-IS-FETCHING', isFetching} as const
 }
 

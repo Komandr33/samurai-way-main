@@ -3,55 +3,22 @@ import axios from 'axios';
 import {Users} from './Users';
 import {connect} from 'react-redux';
 import {AppPropsType} from '../../../redux/store-redux';
-import {Dispatch} from 'redux';
 import {
-  addUserAC,
-  changeIsFetchingAC,
-  deleteUserAC,
-  setCurrentPageAC,
-  setTotalCountAC,
-  setUserAC,
-  toggleFollowedAC,
-  updateUserLocationAC,
-  updateUserStatusAC,
+  addUser,
+  changeIsFetching,
+  deleteUser,
+  setCurrentPage,
+  setTotalCount,
+  setUser,
+  toggleFollowed,
+  updateUserLocation,
+  updateUserStatus,
   UsersStateType,
   UserType
 } from '../../../redux/users-reducer';
 import Preloader from '../../Preloader';
 
-
-export type UsersPropsType = UsersStateType & MapDispatchToPropsType
-
-// export type MapStateToPropsType = {
-//   users: UserType[],
-//   pageSize: number,
-//   totalCount: number,
-//   currentPage: number
-// }
-
-type MapDispatchToPropsType = {
-  setUser: (users: UserType[]) => void
-  addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
-  deleteUsers: (id: string) => void
-  toggleFollowed: (id: string) => void
-  updateUserStatus: (id: string, value: string) => void
-  updateUserLocation: (id: string, cityValue: string, countryValue: string) => void
-  setTotalCount: (count: number) => void
-  setCurrentPage: (pageNumber: number) => void
-  changeIsFetching: (isFetching: boolean) => void
-}
-
-const mapStateToProps = (state: AppPropsType): UsersStateType => {
-  return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalCount: state.usersPage.totalCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching
-  }
-}
-
-export class UsersContainer extends React.Component<UsersPropsType> {
+class UsersWrapper extends React.Component<UsersPropsType> {
 
   componentDidMount() {
     this.props.changeIsFetching(true)
@@ -77,9 +44,7 @@ export class UsersContainer extends React.Component<UsersPropsType> {
   }
 
   backCurrentPage = () => this.setCurrentPage(this.props.currentPage - 1)
-
   forCurrentPage = () => this.setCurrentPage(this.props.currentPage + 1)
-
   toggleFollowed = (id: string) => this.props.toggleFollowed(id)
 
   render = () => {
@@ -94,41 +59,51 @@ export class UsersContainer extends React.Component<UsersPropsType> {
              backCurrentPage={this.backCurrentPage}
              forCurrentPage={this.forCurrentPage}
              setCurrentPage={this.setCurrentPage}
-      /></>
+      />
+    </>
   }
 
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+export type UsersPropsType = UsersStateType & MapDispatchToPropsType
+
+// export type MapStateToPropsType = {
+//   users: UserType[],
+//   pageSize: number,
+//   totalCount: number,
+//   currentPage: number
+// }
+
+type MapDispatchToPropsType = {
+  setUser: (users: UserType[]) => void
+  addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
+  deleteUser: (id: string) => void
+  toggleFollowed: (id: string) => void
+  updateUserStatus: (id: string, value: string) => void
+  updateUserLocation: (id: string, cityValue: string, countryValue: string) => void
+  setTotalCount: (count: number) => void
+  setCurrentPage: (pageNumber: number) => void
+  changeIsFetching: (isFetching: boolean) => void
+}
+
+const mapStateToProps = (state: AppPropsType) => {
   return {
-    setUser: (users: UserType[]) => {
-      dispatch(setUserAC(users))
-    },
-    addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
-      dispatch(addUserAC(userName, statusValue, cityValue, countryValue))
-    },
-    deleteUsers: (id: string) => {
-      dispatch(deleteUserAC(id))
-    },
-    toggleFollowed: (id: string) => {
-      dispatch(toggleFollowedAC(id))
-    },
-    updateUserStatus: (id: string, value: string) => {
-      dispatch(updateUserStatusAC(id, value))
-    },
-    updateUserLocation: (id: string, cityValue: string, countryValue: string) => {
-      dispatch(updateUserLocationAC(id, cityValue, countryValue))
-    },
-    setTotalCount: (count: number) => {
-      dispatch(setTotalCountAC(count))
-    },
-    setCurrentPage: (pageNumber: number) => {
-      dispatch(setCurrentPageAC(pageNumber))
-    },
-    changeIsFetching: (isFetching: boolean) => {
-      dispatch(changeIsFetchingAC(isFetching))
-    }
+    users: state.usersPage.users,
+    pageSize: state.usersPage.pageSize,
+    totalCount: state.usersPage.totalCount,
+    currentPage: state.usersPage.currentPage,
+    isFetching: state.usersPage.isFetching
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export const UsersContainer = connect(mapStateToProps, {
+  setUser: setUser,
+  addUser: addUser,
+  deleteUser: deleteUser,
+  toggleFollowed: toggleFollowed,
+  updateUserStatus: updateUserStatus,
+  updateUserLocation: updateUserLocation,
+  setTotalCount: setTotalCount,
+  setCurrentPage: setCurrentPage,
+  changeIsFetching: changeIsFetching
+})(UsersWrapper)

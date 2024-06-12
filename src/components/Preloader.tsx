@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
+import preloader from '../asstets/images/spinning-circles.svg'
 
 type PreloaderPropsType = {}
 
 const Preloader: FC<PreloaderPropsType> = () => {
   return (
-    <div style={{background: 'white'}}>LOADING</div>
+    <div><img src={preloader} alt={'preloader'}/></div>
   );
 };
 
