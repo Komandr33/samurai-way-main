@@ -60,6 +60,7 @@ export function profileReducer(state: ProfileStateType = ProfileState, action: P
       state.newPostText = ''
       return {...state, posts: [...state.posts, newPost]}
     case 'SET-USER-PROFILE':
+      debugger
       return {...state, profile: action.profile}
     default :
       return state
