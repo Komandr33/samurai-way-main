@@ -2,16 +2,18 @@ import React, {FC} from 'react';
 import {User} from './User';
 import s from './Users.module.css'
 import {UserType} from '../../../redux/users-reducer';
+import {useParams} from 'react-router-dom';
 
 type UsersPropsType = {
   users: UserType[]
   pageSize: number
   currentPage: number
   totalCount: number
-  toggleFollowed: (id: string) => void
+  toggleFollowed: (id: number) => void
   backCurrentPage: () => void
   forCurrentPage: () => void
   setCurrentPage: (currentNumber: number) => void
+  setUserProfile: (userId: number) => void
 }
 
 export const Users: FC<UsersPropsType> = (props) => {
@@ -39,7 +41,7 @@ export const Users: FC<UsersPropsType> = (props) => {
     </div>
 
     {props.users.map((u) => {
-      return <User key={u.id} user={u} toggleFollowed={props.toggleFollowed}/>
+      return <User key={u.id} user={u} toggleFollowed={props.toggleFollowed} setUserProfile={props.setUserProfile}/>
     })}
   </div>
 }

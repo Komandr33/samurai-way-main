@@ -37,11 +37,11 @@ export const App = () => {
         {/*<Route exact path={'/*'}>*/}
         {/*  <Redirect to={PATH.ERROR}/>*/}
         {/*</Route>*/}
-        <Route path={PATH.PROFILE} render={() => <ProfileContainer/>}/>
-        <Route path={PATH.DIALOGS} render={DialogsContainer}/>
-        <Route path={PATH.NEWS} render={News}/>
-        <Route path={PATH.MUSICS} render={Musics}/>
-        <Route path={PATH.FRIENDS} render={Friends}/>
+        <Route path={`${PATH.PROFILE}`} render={() => <ProfileContainer/>}/>
+        <Route path={PATH.DIALOGS} render={() => <DialogsContainer/>}/>
+        <Route path={PATH.NEWS} render={() => <News/>}/>
+        <Route path={PATH.MUSICS} render={() => <Musics/>}/>
+        <Route path={PATH.FRIENDS} render={() => <Friends/>}/>
         <Route path={PATH.USERS} render={() => <UsersContainer/>}/>
         <Route path={PATH.ERROR} render={Error404}/>
       </div>

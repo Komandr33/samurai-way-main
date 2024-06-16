@@ -19,7 +19,7 @@ type PhotosType = {
 
 export type UserType = {
   name: string
-  id: string
+  id: number
   photos: PhotosType
   status: string | null
   followed: boolean
@@ -75,22 +75,22 @@ export const setUser = (users: UserType[]) => {
 export const addUser = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
   return {
     type: 'ADD-USER',
-    id: v1(),
+    id: Math.floor(Math.random()* 1e20),
     userName,
     statusValue,
     countryValue
   } as const
 }
-export const deleteUser = (id: string) => {
+export const deleteUser = (id: number) => {
   return {type: 'DELETE-USER', id} as const
 }
-export const toggleFollowed = (id: string) => {
+export const toggleFollowed = (id: number) => {
   return {type: 'TOGGLE-FOLLOWED', id} as const
 }
-export const updateUserStatus = (id: string, value: string) => {
+export const updateUserStatus = (id: number, value: string) => {
   return {type: 'UPDATE-USER-STATUS', id, value} as const
 }
-export const updateUserLocation = (id: string, cityValue: string, countryValue: string) => {
+export const updateUserLocation = (id: number, cityValue: string, countryValue: string) => {
   return {type: 'UPDATE-LOCATION', id, cityValue, countryValue} as const
 }
 export const setTotalCount = (count: number) => {

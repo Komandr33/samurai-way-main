@@ -1,16 +1,21 @@
 import React from 'react';
 import user_avatar from '../../../asstets/images/user_avatar.jpg';
 import {UserType} from '../../../redux/users-reducer';
+import {Link, useParams} from 'react-router-dom';
+import {PATH} from '../../../App';
 
 type UserPropsType = {
   user: UserType,
-  toggleFollowed: (id: string) => void
+  toggleFollowed: (id: number) => void
+  setUserProfile: (userId: number) => void
 }
 export const User = (props: UserPropsType) => {
 
   return (
     <div>
-      <img src={props.user.photos.small || user_avatar} alt={'avatar'}/>
+      <Link to={`${PATH.PROFILE}/${props.user.id}`} onClick={() => props.setUserProfile(props.user.id)}>
+        <img src={props.user.photos.small || user_avatar} alt={'avatar'}/>
+      </Link>
       <div>
         <div>{props.user.name}</div>
         {/*<div>{props.user.status}</div>*/}
