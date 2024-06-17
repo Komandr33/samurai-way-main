@@ -2,25 +2,33 @@ import React, {useEffect} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {AppPropsType} from '../../../redux/store-redux';
-import {ProfileStateType, setUserProfile} from '../../../redux/profile-reducer';
+import {ProfileStateType, ProfileType, setUserProfile} from '../../../redux/profile-reducer';
 import {Profile} from './Profile';
 import {useParams} from 'react-router-dom';
 
-const ProfileWrapper = (props: ProfileStateType) => {
+const ProfileWrapper = (props: ProfileContainerPropsType) => {
 
   const params = useParams<{ userId: string }>()
-  const id = Number(params.userId)
+  let userId = Number(params.userId)
+  if (!userId) {
+    userId = 2
+  }
 
   useEffect(() => {
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
-      .then(res => {
-        setUserProfile(res.data)
-      })
+    if(userId) {
+      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+        .then(res => {
+          console.log(res.data)
+          props.setUserProfile(res.data)
+        }).catch(err => console.log(err.message))
+    }
   }, [])
 
-  // return <Profile {...props}/>
-  return <Profile profile={props.profile} posts={props.posts} newPostText={props.newPostText}/>
+  return <Profile {...props} profile={props.profile}/>
+  // return <Profile profile={props.profile} posts={props.posts} newPostText={props.newPostText}/>
 }
+
+type ProfileContainerPropsType = ProfileStateType & mapDispatchToPropsType
 
 const mapStateToProps = (state: AppPropsType): ProfileStateType => {
   return {
@@ -28,6 +36,10 @@ const mapStateToProps = (state: AppPropsType): ProfileStateType => {
     posts: state.profile.posts,
     newPostText: state.profile.newPostText
   }
+}
+
+type mapDispatchToPropsType = {
+  setUserProfile: (profile: ProfileType) => void
 }
 
 export const ProfileContainer = connect(mapStateToProps, {setUserProfile})(ProfileWrapper);

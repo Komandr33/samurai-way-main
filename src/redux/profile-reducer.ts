@@ -35,10 +35,14 @@ type ProfileReducerType =
   ReturnType<typeof addPost> |
   ReturnType<typeof setUserProfile>
 
-export type ProfileStateType = typeof ProfileState
+export type ProfileStateType = {
+  profile: ProfileType | null,
+  posts: PostType[],
+  newPostText: string
+}
 
 const ProfileState = {
-  profile: {} as ProfileType,
+  profile: null,
   posts: [
     {id: v1(), message: 'Hello!!!', likes: 15},
     {id: v1(), message: 'Hello! How, are you?', likes: 20},
@@ -60,7 +64,7 @@ export function profileReducer(state: ProfileStateType = ProfileState, action: P
       state.newPostText = ''
       return {...state, posts: [...state.posts, newPost]}
     case 'SET-USER-PROFILE':
-      debugger
+      console.log('SET-USER-PROFILE')
       return {...state, profile: action.profile}
     default :
       return state

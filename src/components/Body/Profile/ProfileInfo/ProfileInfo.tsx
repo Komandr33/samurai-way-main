@@ -1,7 +1,20 @@
 import s from '../Profile.module.css';
-import React from 'react';
+import React, {FC} from 'react';
+import {ProfileType} from '../../../../redux/profile-reducer';
+import Preloader from '../../../Preloader';
 
-export const ProfileInfo = () => {
+type ProfileInfoPropsType = {
+  profile: ProfileType | null
+}
+
+export const ProfileInfo: FC<ProfileInfoPropsType> = ({profile}) => {
+
+  if (!profile) {
+    return <Preloader/>
+  }
+
+  const profileImg = profile.photos.large ?? 'https://image.cnbcfm.com/api/v1/image/103260517-GettyImages-179798713_[1]_-_Copy.jpg?v=1529470293'
+
   return (
     <div className={s.content}>
       <img
@@ -10,11 +23,10 @@ export const ProfileInfo = () => {
         alt="background"/>
       <div className={s.user}>
         <img
-          src="https://image.cnbcfm.com/api/v1/image/103260517-GettyImages-179798713_[1]_-_Copy.jpg?v=1529470293"
+          src={profileImg}
           alt="avatar"/>
-        <div>Name: Andrey</div>
-        <div>Age: 36</div>
-        <div>hobby:</div>
+        <div>Name: {profile.fullName}</div>
+        {profile.lookingForAJob && <div>Предложения по работе присылайте в личку</div>}
         <div>work:</div>
       </div>
     </div>
