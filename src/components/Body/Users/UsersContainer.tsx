@@ -18,7 +18,7 @@ import {
 } from '../../../redux/users-reducer';
 import Preloader from '../../Preloader';
 
-const UsersWrapper: FC<UsersPropsType> = (props) => {
+const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
   useEffect(() => {
     props.changeIsFetching(true)
     axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
@@ -41,14 +41,13 @@ const UsersWrapper: FC<UsersPropsType> = (props) => {
     }
   }
 
-  const setUserProfile = (userId: number) => {
-    console.log('set')
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then(res => {
-        setUserProfile(res.data)
-        // console.log(res.data)
-      })
-  }
+  // const setUserProfile = (userId: number) => {
+  //   axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+  //     .then(res => {
+  //       setUserProfile(res.data)
+  //       // console.log(res.data)
+  //     })
+  // }
 
   const backCurrentPage = () => setCurrentPage(props.currentPage - 1)
   const forCurrentPage = () => setCurrentPage(props.currentPage + 1)
@@ -64,12 +63,12 @@ const UsersWrapper: FC<UsersPropsType> = (props) => {
            backCurrentPage={backCurrentPage}
            forCurrentPage={forCurrentPage}
            setCurrentPage={setCurrentPage}
-           setUserProfile={setUserProfile}
+      // setUserProfile={setUserProfile}
     />
   </>
 }
 
-export type UsersPropsType = UsersStateType & MapDispatchToPropsType
+export type UsersContainerPropsType = UsersStateType & MapDispatchToPropsType
 
 type MapDispatchToPropsType = {
   setUser: (users: UserType[]) => void
@@ -83,7 +82,7 @@ type MapDispatchToPropsType = {
   changeIsFetching: (isFetching: boolean) => void
 }
 
-const mapStateToProps = (state: AppPropsType) => {
+const mapStateToProps = (state: AppPropsType): UsersStateType => {
   return {
     users: state.usersPage.users,
     pageSize: state.usersPage.pageSize,
@@ -94,13 +93,8 @@ const mapStateToProps = (state: AppPropsType) => {
 }
 
 export const UsersContainer = connect(mapStateToProps, {
-  setUser: setUser,
-  addUser: addUser,
-  deleteUser: deleteUser,
-  toggleFollowed: toggleFollowed,
-  updateUserStatus: updateUserStatus,
-  updateUserLocation: updateUserLocation,
-  setTotalCount: setTotalCount,
-  setCurrentPage: setCurrentPage,
-  changeIsFetching: changeIsFetching
+  setUser, addUser, deleteUser,
+  toggleFollowed, updateUserStatus,
+  updateUserLocation, setTotalCount,
+  setCurrentPage, changeIsFetching
 })(UsersWrapper)
