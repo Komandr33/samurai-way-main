@@ -18,6 +18,19 @@ import {
 } from '../../../redux/users-reducer';
 import Preloader from '../../Preloader';
 
+export type UsersContainerPropsType = UsersStateType & MapDispatchToPropsType
+type MapDispatchToPropsType = {
+  setUser: (users: UserType[]) => void
+  addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
+  deleteUser: (id: number) => void
+  toggleFollowed: (id: number) => void
+  updateUserStatus: (id: number, value: string) => void
+  updateUserLocation: (id: number, cityValue: string, countryValue: string) => void
+  setTotalCount: (count: number) => void
+  setCurrentPage: (pageNumber: number) => void
+  changeIsFetching: (isFetching: boolean) => void
+}
+
 const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
   useEffect(() => {
     props.changeIsFetching(true)
@@ -41,14 +54,6 @@ const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
     }
   }
 
-  // const setUserProfile = (userId: number) => {
-  //   axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-  //     .then(res => {
-  //       setUserProfile(res.data)
-  //       // console.log(res.data)
-  //     })
-  // }
-
   const backCurrentPage = () => setCurrentPage(props.currentPage - 1)
   const forCurrentPage = () => setCurrentPage(props.currentPage + 1)
   const toggleFollowed = (id: number) => props.toggleFollowed(id)
@@ -63,23 +68,8 @@ const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
            backCurrentPage={backCurrentPage}
            forCurrentPage={forCurrentPage}
            setCurrentPage={setCurrentPage}
-      // setUserProfile={setUserProfile}
     />
   </>
-}
-
-export type UsersContainerPropsType = UsersStateType & MapDispatchToPropsType
-
-type MapDispatchToPropsType = {
-  setUser: (users: UserType[]) => void
-  addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
-  deleteUser: (id: number) => void
-  toggleFollowed: (id: number) => void
-  updateUserStatus: (id: number, value: string) => void
-  updateUserLocation: (id: number, cityValue: string, countryValue: string) => void
-  setTotalCount: (count: number) => void
-  setCurrentPage: (pageNumber: number) => void
-  changeIsFetching: (isFetching: boolean) => void
 }
 
 const mapStateToProps = (state: AppPropsType): UsersStateType => {
