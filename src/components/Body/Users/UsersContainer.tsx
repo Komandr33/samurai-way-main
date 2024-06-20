@@ -34,7 +34,7 @@ type MapDispatchToPropsType = {
 const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
   useEffect(() => {
     props.changeIsFetching(true)
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
+    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`, {withCredentials: true})
       .then(res => {
         props.changeIsFetching(false)
         props.setUser(res.data.items);
@@ -46,7 +46,7 @@ const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
     if (props.currentPage !== currentNumber) { // проверка, чтобы запрос шел только если клик не на селектнутой цифре
       props.changeIsFetching(true)
       props.setCurrentPage(currentNumber)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentNumber}&count=${props.pageSize}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentNumber}&count=${props.pageSize}`, {withCredentials: true})
         .then(res => {
           props.changeIsFetching(false)
           props.setUser(res.data.items);
