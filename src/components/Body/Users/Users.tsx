@@ -1,7 +1,8 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {User} from './User';
 import s from './Users.module.css'
 import {UserType} from '../../../redux/users-reducer';
+import {Pagination} from '../../Pagination';
 
 type UsersPropsType = {
   users: UserType[]
@@ -9,43 +10,34 @@ type UsersPropsType = {
   currentPage: number
   totalCount: number
   toggleFollowed: (id: number) => void
-  backCurrentPage: () => void
-  forCurrentPage: () => void
   setCurrentPage: (currentNumber: number) => void
+  toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
+  followedInProgress: number[]
+  // setPageSize: (pageSize: number) => void
   // setUserProfile: (userId: number) => void
 }
 
-export const Users: FC<UsersPropsType> = (props) => {
+export const Users = (props: UsersPropsType) => {
 
-  let pagesCount = Math.ceil(props.totalCount / props.pageSize)
+  let pagesBlocks = Math.ceil(props.totalCount / props.pageSize)
   let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
+  for (let i = 1; i <= pagesBlocks; i++) {
     pages.push(i)
   }
 
   return <div className={s.item}>
 
-    <div className={s.switcher}>
-      {props.currentPage !== 1 && <span className={s.forBack}
-                                        onClick={props.backCurrentPage}> {'<'} </span>} {/*пропадает, если на первой странице*/}
-      {pages.map(p => {
-          return <span key={p}
-                       className={p == props.currentPage ? s.selected : ''}
-                       onClick={() => props.setCurrentPage(p)}>{p}</span>
-        }
-      )}
-      {props.currentPage !== pages.length &&
-          <span className={s.forBack}
-                onClick={props.forCurrentPage}> {'>'} </span>} {/*пропадает, если на последней странице*/}
-    </div>
-
+    <Pagination currentPage={props.currentPage} totalPages={pagesBlocks} onPageChange={props.setCurrentPage}/>
     {props.users.map((u) => {
       return <User key={u.id}
                    user={u}
                    toggleFollowed={props.toggleFollowed}
+                   toggleIsFollowingProgress={props.toggleIsFollowingProgress}
+                   followedInProgress={props.followedInProgress}
         // setUserProfile={props.setUserProfile}
       />
     })}
+    <Pagination currentPage={props.currentPage} totalPages={pagesBlocks} onPageChange={props.setCurrentPage}/>
   </div>
 }
 
