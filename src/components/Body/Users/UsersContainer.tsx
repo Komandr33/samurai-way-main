@@ -1,5 +1,4 @@
-import React, {FC, useEffect} from 'react';
-import axios from 'axios';
+import React, {useEffect} from 'react';
 import {Users} from './Users';
 import {connect} from 'react-redux';
 import {AppPropsType} from '../../../redux/store-redux';
@@ -10,15 +9,18 @@ import {
   setCurrentPage,
   setTotalCount,
   setUser,
-  toggleFollowed,
+  toggleFollowed, toggleIsFollowingProgress,
   updateUserLocation,
   updateUserStatus,
   UsersStateType,
   UserType
 } from '../../../redux/users-reducer';
 import Preloader from '../../Preloader';
+import {usersAPI} from '../../../api/api';
+
 
 export type UsersContainerPropsType = UsersStateType & MapDispatchToPropsType
+
 type MapDispatchToPropsType = {
   setUser: (users: UserType[]) => void
   addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
@@ -29,16 +31,17 @@ type MapDispatchToPropsType = {
   setTotalCount: (count: number) => void
   setCurrentPage: (pageNumber: number) => void
   changeIsFetching: (isFetching: boolean) => void
+  toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
-const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
+const UsersWrapper = (props: UsersContainerPropsType) => {
   useEffect(() => {
     props.changeIsFetching(true)
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`, {withCredentials: true})
-      .then(res => {
+    usersAPI.getUsers(props.currentPage, props.pageSize)
+      .then(data => {
         props.changeIsFetching(false)
-        props.setUser(res.data.items);
-        props.setTotalCount(res.data.totalCount)
+        props.setUser(data.items);
+        props.setTotalCount(data.totalCount)
       })
   }, [])
 
@@ -46,16 +49,14 @@ const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
     if (props.currentPage !== currentNumber) { // проверка, чтобы запрос шел только если клик не на селектнутой цифре
       props.changeIsFetching(true)
       props.setCurrentPage(currentNumber)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentNumber}&count=${props.pageSize}`, {withCredentials: true})
-        .then(res => {
+      usersAPI.getUsers(props.currentPage, props.pageSize)
+        .then(data => {
           props.changeIsFetching(false)
-          props.setUser(res.data.items);
+          props.setUser(data.items);
         })
     }
   }
 
-  const backCurrentPage = () => setCurrentPage(props.currentPage - 1)
-  const forCurrentPage = () => setCurrentPage(props.currentPage + 1)
   const toggleFollowed = (id: number) => props.toggleFollowed(id)
 
   return <>
@@ -65,9 +66,9 @@ const UsersWrapper: FC<UsersContainerPropsType> = (props) => {
            currentPage={props.currentPage}
            totalCount={props.totalCount}
            toggleFollowed={toggleFollowed}
-           backCurrentPage={backCurrentPage}
-           forCurrentPage={forCurrentPage}
            setCurrentPage={setCurrentPage}
+           toggleIsFollowingProgress={props.toggleIsFollowingProgress}
+           followedInProgress={props.followedInProgress}
     />
   </>
 }
@@ -78,7 +79,8 @@ const mapStateToProps = (state: AppPropsType): UsersStateType => {
     pageSize: state.usersPage.pageSize,
     totalCount: state.usersPage.totalCount,
     currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching
+    isFetching: state.usersPage.isFetching,
+    followedInProgress: state.usersPage.followedInProgress
   }
 }
 
@@ -86,5 +88,5 @@ export const UsersContainer = connect(mapStateToProps, {
   setUser, addUser, deleteUser,
   toggleFollowed, updateUserStatus,
   updateUserLocation, setTotalCount,
-  setCurrentPage, changeIsFetching
+  setCurrentPage, changeIsFetching, toggleIsFollowingProgress
 })(UsersWrapper)
