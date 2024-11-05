@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {Header} from './Header';
-import axios from 'axios';
 import {AuthStateType, setAuthUser} from '../../redux/auth-reduser';
 import {connect} from 'react-redux';
 import {AppPropsType} from '../../redux/store-redux';
+import {authAPI} from '../../api/api';
 
 export type HeaderContainerPropsType = AuthStateType & MapDispatchToPropsType
 type MapDispatchToPropsType = {
@@ -12,10 +12,10 @@ type MapDispatchToPropsType = {
 
 export function HeaderWrapper(props: HeaderContainerPropsType) {
   useEffect(() => {
-    axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true})
-      .then(res => {
-        if (res.data.resultCode === 0) {
-          props.setAuthUser(res.data.data);
+    authAPI.getIsAuth()
+      .then(data => {
+        if (data.resultCode === 0) {
+          props.setAuthUser(data.data);
         }
       })
   }, [])

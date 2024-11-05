@@ -1,4 +1,4 @@
-import user_avatar from '../asstets/images/user_avatar.jpg';
+import user_avatar from '../assets/images/user_avatar.jpg';
 
 test('toggle followed', () => {
   const state = {
