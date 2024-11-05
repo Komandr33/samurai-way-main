@@ -1,5 +1,4 @@
-import {v1} from 'uuid';
-import user_avatar from '../asstets/images/user_avatar.jpg'
+import user_avatar from '../assets/images/user_avatar.jpg'
 
 type UsersReducerType =
   ReturnType<typeof setUser> |
@@ -10,7 +9,9 @@ type UsersReducerType =
   ReturnType<typeof updateUserLocation> |
   ReturnType<typeof setTotalCount> |
   ReturnType<typeof setCurrentPage> |
-  ReturnType<typeof changeIsFetching>
+  ReturnType<typeof changeIsFetching> |
+  ReturnType<typeof toggleIsFollowingProgress>
+
 
 type PhotosType = {
   small: string | null
@@ -32,7 +33,8 @@ const usersState = {
   pageSize: 100,
   totalCount: 0,
   currentPage: 1,
-  isFetching: true
+  isFetching: true,
+  followedInProgress: [] as number[]
 }
 
 export function usersReducer(state: UsersStateType = usersState, action: UsersReducerType): UsersStateType {
@@ -60,6 +62,15 @@ export function usersReducer(state: UsersStateType = usersState, action: UsersRe
       return {...state, currentPage: action.currentPage}
     case 'CHANGE-IS-FETCHING':
       return {...state, isFetching: action.isFetching}
+    case 'TOGGLE-IS-FOLLOWING-PROGRESS':
+      return {
+        ...state,
+        followedInProgress: action.isFetching
+          ? [...state.followedInProgress, action.userId]
+          : state.followedInProgress.filter(id => id !== action.userId)
+      }
+    // case 'SET-PAGE-SIZE':
+    //   return {...state, pageSize: action.pageSize}
     // case 'UPDATE-LOCATION':
     //   const user = {...state.users.find(u => u.id === action.id)}
     //   const newLocation = {...user.location, city: action.cityValue, country: action.countryValue}
@@ -72,6 +83,7 @@ export function usersReducer(state: UsersStateType = usersState, action: UsersRe
 export const setUser = (users: UserType[]) => {
   return {type: 'SET-USER', users} as const
 }
+
 export const addUser = (userName: string, statusValue: string, cityValue: string, countryValue: string) => {
   return {
     type: 'ADD-USER',
@@ -81,25 +93,39 @@ export const addUser = (userName: string, statusValue: string, cityValue: string
     countryValue
   } as const
 }
+
 export const deleteUser = (id: number) => {
   return {type: 'DELETE-USER', id} as const
 }
+
 export const toggleFollowed = (id: number) => {
   return {type: 'TOGGLE-FOLLOWED', id} as const
 }
+
 export const updateUserStatus = (id: number, value: string) => {
   return {type: 'UPDATE-USER-STATUS', id, value} as const
 }
+
 export const updateUserLocation = (id: number, cityValue: string, countryValue: string) => {
   return {type: 'UPDATE-LOCATION', id, cityValue, countryValue} as const
 }
+
 export const setTotalCount = (count: number) => {
   return {type: 'SET-TOTAL-COUNT', count} as const
 }
+
 export const setCurrentPage = (currentPage: number) => {
   return {type: 'SET-CURRENT-PAGE', currentPage} as const
 }
+
 export const changeIsFetching = (isFetching: boolean) => {
   return {type: 'CHANGE-IS-FETCHING', isFetching} as const
 }
 
+export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) => {
+  return {type: 'TOGGLE-IS-FOLLOWING-PROGRESS', isFetching, userId} as const
+}
+
+// export const setPageSize = (pageSize: number) => {
+//   return {type: 'SET-PAGE-SIZE', pageSize} as const
+// }
