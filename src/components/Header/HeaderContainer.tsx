@@ -1,29 +1,27 @@
 import React, {useEffect} from 'react';
 import {Header} from './Header';
-import {AuthStateType, setAuthUser} from '../../redux/auth-reduser';
+import {AuthStateType, getAuthUserData} from '../../redux/auth-reducer';
 import {connect} from 'react-redux';
-import {AppPropsType} from '../../redux/store-redux';
-import {authAPI} from '../../api/api';
+import {AppRootStateType, useAppDispatch} from '../../redux/store-redux';
 
 export type HeaderContainerPropsType = AuthStateType & MapDispatchToPropsType
+
 type MapDispatchToPropsType = {
-  setAuthUser: (data: AuthStateType) => void
+  // setAuthUser: (data: AuthStateType) => void
 }
 
 export function HeaderWrapper(props: HeaderContainerPropsType) {
+
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
-    authAPI.getIsAuth()
-      .then(data => {
-        if (data.resultCode === 0) {
-          props.setAuthUser(data.data);
-        }
-      })
+    dispatch(getAuthUserData());
   }, [])
 
   return <Header {...props}/>
 }
 
-const mapStateToProps = (state: AppPropsType): AuthStateType => {
+const mapStateToProps = (state: AppRootStateType): AuthStateType => {
   return {
     id: state.auth.id,
     email: state.auth.email,
@@ -32,4 +30,4 @@ const mapStateToProps = (state: AppPropsType): AuthStateType => {
   }
 }
 
-export const HeaderContainer = connect(mapStateToProps, {setAuthUser})(HeaderWrapper)
+export const HeaderContainer = connect(mapStateToProps, {})(HeaderWrapper)

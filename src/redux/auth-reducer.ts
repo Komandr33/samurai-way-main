@@ -1,4 +1,7 @@
-type AuthActionType = ReturnType<typeof setAuthUser>
+import {Dispatch} from 'redux';
+import {authAPI} from '../api/api';
+
+type AuthActionType = ReturnType<typeof setAuth>
 
 export type AuthStateType = {
   id: number | null,
@@ -23,6 +26,18 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthAct
   }
 }
 
-export const setAuthUser = (data: AuthStateType) => {
+// actions
+export const setAuth = (data: AuthStateType) => {
   return {type: 'SET-AUTH-USER', data} as const
+}
+
+// thunks
+
+export const getAuthUserData = () => (dispatch: Dispatch) => {
+  authAPI.getIsAuth()
+    .then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setAuth(data.data));
+      }
+    })
 }
