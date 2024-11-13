@@ -1,9 +1,11 @@
-import {combineReducers, createStore,} from 'redux';
+import {AnyAction, applyMiddleware, combineReducers, createStore,} from 'redux';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
 import {usersReducer} from './users-reducer';
 import {sidebarReducer} from './sidebar-reducer';
-import {authReducer} from './auth-reduser';
+import {authReducer} from './auth-reducer';
+import thunkMiddleware, {ThunkDispatch} from 'redux-thunk';
+import {useDispatch} from 'react-redux';
 
 const rootReducer = combineReducers({
   profile: profileReducer,
@@ -12,9 +14,12 @@ const rootReducer = combineReducers({
   sidebar: sidebarReducer,
   auth: authReducer
 });
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-export type AppPropsType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof rootReducer>
+// создаем тип диспатча который принимает как AC так и TC
+export type AppThunkDispatch = ThunkDispatch<AppRootStateType, any, AnyAction>
 
+export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
 // @ts-ignore
 window.store = store
