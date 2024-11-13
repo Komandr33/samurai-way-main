@@ -1,39 +1,20 @@
 import React from 'react';
 import user_avatar from '../../../assets/images/user_avatar.jpg';
-import {UserType} from '../../../redux/users-reducer';
+import {setFollowed, UserType} from '../../../redux/users-reducer';
 import {Link} from 'react-router-dom';
 import {PATH} from '../../../App';
-import {followAPI} from '../../../api/api';
+import {useAppDispatch} from '../../../redux/store-redux';
 
 type UserPropsType = {
   user: UserType,
-  toggleFollowed: (id: number) => void
-  toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
   followedInProgress: number[]
 }
 export const User = (props: UserPropsType) => {
 
+  const dispatch = useAppDispatch();
+
   const followedOnClickHandler = () => {
-    if (!props.user.followed) {
-      props.toggleIsFollowingProgress(true, props.user.id)
-      followAPI.addFollow(props.user.id)
-        .then(data => {
-          if (data.resultCode == 0) {
-            props.toggleIsFollowingProgress(false, props.user.id)
-            props.toggleFollowed(props.user.id)
-          }
-        })
-    }
-    if (props.user.followed) {
-      props.toggleIsFollowingProgress(true, props.user.id)
-      followAPI.deleteFollow(props.user.id)
-        .then(data => {
-          if (data.resultCode == 0) {
-            props.toggleIsFollowingProgress(false, props.user.id)
-            props.toggleFollowed(props.user.id)
-          }
-        })
-    }
+    dispatch(setFollowed(props.user.id, props.user.followed));
   }
 
   return (

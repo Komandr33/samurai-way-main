@@ -1,4 +1,6 @@
 import user_avatar from '../assets/images/user_avatar.jpg'
+import {followAPI, usersAPI} from '../api/api';
+import {Dispatch} from 'redux';
 
 type UsersReducerType =
   ReturnType<typeof setUser> |
@@ -80,6 +82,7 @@ export function usersReducer(state: UsersStateType = usersState, action: UsersRe
   }
 }
 
+// actions
 export const setUser = (users: UserType[]) => {
   return {type: 'SET-USER', users} as const
 }
@@ -129,3 +132,50 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =
 // export const setPageSize = (pageSize: number) => {
 //   return {type: 'SET-PAGE-SIZE', pageSize} as const
 // }
+
+// thunks
+
+export const getUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+  dispatch(changeIsFetching(true));
+  usersAPI.getUsers(currentPage, pageSize)
+    .then(data => {
+      dispatch(changeIsFetching(false));
+      dispatch(setUser(data.items));
+      dispatch(setTotalCount(data.totalCount));
+    })
+}
+
+export const setCurrentPageTC = (currentPage: number, pageSize: number, currentNumber: number) => (dispatch: Dispatch) => {
+  if (currentPage !== currentNumber) { // проверка, чтобы запрос шел только если клик не на селектнутой цифре
+    dispatch(changeIsFetching(true));
+    dispatch(setCurrentPage(currentNumber));
+    usersAPI.getUsers(currentPage, pageSize)
+      .then(data => {
+        dispatch(changeIsFetching(false));
+        dispatch(setUser(data.items));
+      })
+  }
+}
+
+export const setFollowed = (userId: number, inFollowed: boolean) => (dispatch: Dispatch) => {
+  if (!inFollowed) {
+    dispatch(toggleIsFollowingProgress(true, userId));
+    followAPI.addFollow(userId)
+      .then(data => {
+        if (data.resultCode == 0) {
+          dispatch(toggleIsFollowingProgress(false, userId));
+          dispatch(toggleFollowed(userId));
+        }
+      })
+  }
+  if (inFollowed) {
+    dispatch(toggleIsFollowingProgress(true, userId));
+    followAPI.deleteFollow(userId)
+      .then(data => {
+        if (data.resultCode == 0) {
+          dispatch(toggleIsFollowingProgress(false, userId));
+          dispatch(toggleFollowed(userId));
+        }
+      })
+  }
+}

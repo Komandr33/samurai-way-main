@@ -1,79 +1,50 @@
 import React, {useEffect} from 'react';
 import {Users} from './Users';
 import {connect} from 'react-redux';
-import {AppPropsType} from '../../../redux/store-redux';
-import {
-  addUser,
-  changeIsFetching,
-  deleteUser,
-  setCurrentPage,
-  setTotalCount,
-  setUser,
-  toggleFollowed, toggleIsFollowingProgress,
-  updateUserLocation,
-  updateUserStatus,
-  UsersStateType,
-  UserType
-} from '../../../redux/users-reducer';
+import {AppRootStateType, useAppDispatch} from '../../../redux/store-redux';
+import {getUsers, setCurrentPageTC, UsersStateType} from '../../../redux/users-reducer';
 import Preloader from '../../Preloader';
-import {usersAPI} from '../../../api/api';
+import {widthAuthRedirect} from '../../../HOC/widthAuthRedirect';
 
 
 export type UsersContainerPropsType = UsersStateType & MapDispatchToPropsType
 
 type MapDispatchToPropsType = {
-  setUser: (users: UserType[]) => void
-  addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
-  deleteUser: (id: number) => void
-  toggleFollowed: (id: number) => void
-  updateUserStatus: (id: number, value: string) => void
-  updateUserLocation: (id: number, cityValue: string, countryValue: string) => void
-  setTotalCount: (count: number) => void
-  setCurrentPage: (pageNumber: number) => void
-  changeIsFetching: (isFetching: boolean) => void
-  toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
+  // addUser: (userName: string, statusValue: string, cityValue: string, countryValue: string) => void
+  // deleteUser: (id: number) => void
+  // updateUserStatus: (id: number, value: string) => void
+  // updateUserLocation: (id: number, cityValue: string, countryValue: string) => void
+  // toggleFollowed: (id: number) => void
+  // setTotalCount: (count: number) => void
+  // changeIsFetching: (isFetching: boolean) => void
+  // toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 const UsersWrapper = (props: UsersContainerPropsType) => {
+
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    props.changeIsFetching(true)
-    usersAPI.getUsers(props.currentPage, props.pageSize)
-      .then(data => {
-        props.changeIsFetching(false)
-        props.setUser(data.items);
-        props.setTotalCount(data.totalCount)
-      })
+    dispatch(getUsers(props.currentPage, props.pageSize));
   }, [])
 
   const setCurrentPage = (currentNumber: number) => {
-    if (props.currentPage !== currentNumber) { // проверка, чтобы запрос шел только если клик не на селектнутой цифре
-      props.changeIsFetching(true)
-      props.setCurrentPage(currentNumber)
-      usersAPI.getUsers(props.currentPage, props.pageSize)
-        .then(data => {
-          props.changeIsFetching(false)
-          props.setUser(data.items);
-        })
-    }
+    dispatch(setCurrentPageTC(props.currentPage, props.pageSize, currentNumber));
   }
-
-  const toggleFollowed = (id: number) => props.toggleFollowed(id)
 
   return <>
     {props.isFetching && <Preloader/>}
     <Users users={props.users}
            pageSize={props.pageSize}
-           currentPage={props.currentPage}
            totalCount={props.totalCount}
-           toggleFollowed={toggleFollowed}
+           currentPage={props.currentPage}
            setCurrentPage={setCurrentPage}
-           toggleIsFollowingProgress={props.toggleIsFollowingProgress}
            followedInProgress={props.followedInProgress}
     />
   </>
 }
 
-const mapStateToProps = (state: AppPropsType): UsersStateType => {
+const mapStateToProps = (state: AppRootStateType): UsersStateType => {
   return {
     users: state.usersPage.users,
     pageSize: state.usersPage.pageSize,
@@ -84,9 +55,4 @@ const mapStateToProps = (state: AppPropsType): UsersStateType => {
   }
 }
 
-export const UsersContainer = connect(mapStateToProps, {
-  setUser, addUser, deleteUser,
-  toggleFollowed, updateUserStatus,
-  updateUserLocation, setTotalCount,
-  setCurrentPage, changeIsFetching, toggleIsFollowingProgress
-})(UsersWrapper)
+export const UsersContainer = connect(mapStateToProps, {})(widthAuthRedirect(UsersWrapper))
