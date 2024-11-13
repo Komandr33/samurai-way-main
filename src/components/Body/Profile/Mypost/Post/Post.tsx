@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import s from './Post.module.css'
 
 type PropsType = {
@@ -6,7 +6,7 @@ type PropsType = {
   likeCounts: number
 }
 
-export const Post: FC<PropsType> = (props) => {
+export const Post = (props: PropsType) => {
   return (
     <div className={s.post}>
       <div>
