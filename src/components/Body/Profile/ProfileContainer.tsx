@@ -1,15 +1,16 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from '../../../redux/store-redux';
-import {getUserProfile, ProfileStateType,} from '../../../redux/profile-reducer';
+import {getUserProfile, getUserProfileStatus, ProfileStateType,} from '../../../redux/profile-reducer';
 import {Profile} from './Profile';
 import {useParams} from 'react-router-dom';
 import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
 
-type ProfileContainerPropsType = ProfileStateType & mapDispatchToPropsType
+export type ProfileContainerPropsType = ProfileStateType & mapDispatchToPropsType
 
 type mapDispatchToPropsType = {
   getUserProfile: (userId: number) => void
+  getUserProfileStatus: (userId: number) => void
 }
 
 const ProfileWrapper = (props: ProfileContainerPropsType) => {
@@ -26,17 +27,22 @@ const ProfileWrapper = (props: ProfileContainerPropsType) => {
     }
   }, [])
 
-  return <Profile {...props} profile={props.profile}/>
+  return <Profile {...props}/>
 }
 
 const mapStateToProps = (state: AppRootStateType): ProfileStateType => {
   return {
     profile: state.profile.profile,
     posts: state.profile.posts,
-    newPostText: state.profile.newPostText
+    newPostText: state.profile.newPostText,
+    status: state.profile.status
   }
 }
-export const ProfileContainer = connect(mapStateToProps, {getUserProfile})(widthAuthRedirect(ProfileWrapper));
+export const ProfileContainer = connect(mapStateToProps, {
+  getUserProfile,
+  getUserProfileStatus
+})(widthAuthRedirect(ProfileWrapper));
+
 // export const ProfileContainer = compose(
 //   connect(mapStateToProps, {getUserProfile}),
 //   widthAuthRedirect,

@@ -1,12 +1,12 @@
 import {v1} from 'uuid';
 import {profileAPI} from '../api/api';
-import {Dispatch} from 'redux';
+import {AppThunkDispatch} from './store-redux';
 
-export type PostType = {
-  id: string
-  message: string
-  likes: number
-}
+type ProfileReducerType =
+  ReturnType<typeof updateText> |
+  ReturnType<typeof addPost> |
+  ReturnType<typeof setUserProfile> |
+  ReturnType<typeof setUserProfileStatus>
 
 type ProfileContactsType = {
   facebook: string | null
@@ -17,6 +17,12 @@ type ProfileContactsType = {
   vk: string | null
   website: string | null
   youtube: string | null
+}
+
+export type PostType = {
+  id: string
+  message: string
+  likes: number
 }
 
 export type ProfileType = {
@@ -32,15 +38,11 @@ export type ProfileType = {
   userId: number
 }
 
-type ProfileReducerType =
-  ReturnType<typeof updateText> |
-  ReturnType<typeof addPost> |
-  ReturnType<typeof setUserProfile>
-
 export type ProfileStateType = {
   profile: ProfileType | null,
   posts: PostType[],
-  newPostText: string
+  newPostText: string,
+  status: string | null
 }
 
 const ProfileState = {
@@ -51,7 +53,8 @@ const ProfileState = {
     {id: v1(), message: 'GO, GO, GO!!!', likes: 10},
     {id: v1(), message: 'Be happy!', likes: 5},
   ] as PostType[],
-  newPostText: ''
+  newPostText: '',
+  status: null
 }
 
 export function profileReducer(state: ProfileStateType = ProfileState, action: ProfileReducerType): ProfileStateType {
@@ -67,6 +70,8 @@ export function profileReducer(state: ProfileStateType = ProfileState, action: P
       return {...state, posts: [...state.posts, newPost]}
     case 'SET-USER-PROFILE':
       return {...state, profile: action.profile}
+    case 'SET-USER-PROFILE-STATUS':
+      return {...state, status: action.status}
     default :
       return state
   }
@@ -78,11 +83,21 @@ export const updateText = (id: string, value: string) => {
 }
 export const addPost = () => ({type: 'ADD-POST'}) as const
 export const setUserProfile = (profile: ProfileType) => ({type: 'SET-USER-PROFILE', profile}) as const
+export const setUserProfileStatus = (status: string) => ({type: 'SET-USER-PROFILE-STATUS', status}) as const
 
 //thunks
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+export const getUserProfile = (userId: number) => (dispatch: AppThunkDispatch) => {
   profileAPI.getProfile(userId)
     .then(data => {
       dispatch(setUserProfile(data));
+      dispatch(getUserProfileStatus(userId));
+    }).catch(err => console.log(err.message))
+}
+
+export const getUserProfileStatus = (userId: number) => (dispatch: AppThunkDispatch) => {
+  profileAPI.getUserProfileStatus(userId)
+    .then(data => {
+      console.log(data)
+      dispatch(setUserProfileStatus(data));
     }).catch(err => console.log(err.message))
 }
