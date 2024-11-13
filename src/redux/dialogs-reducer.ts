@@ -1,8 +1,9 @@
 import {MessageType} from '../App';
 import {v1} from 'uuid';
 import {DialogType} from '../components/Body/Dialogs/Dialog/Dialog';
+import {TextareaId} from '../components/Textarea/Textarea';
 
-export type DialogsReducerType = ReturnType<typeof updateTextAC> | ReturnType<typeof addMessageAC>
+export type DialogsReducerType = ReturnType<typeof updateText> | ReturnType<typeof addMessage>
 
 export type DialogsStateType = typeof DialogsState
 
@@ -19,8 +20,6 @@ const DialogsState = {
     {id: v1(), message: 'Hello! How are you?'},
     {id: v1(), message: 'Hello'},
     {id: v1(), message: 'Yo'},
-    {id: v1(), message: 'Yo'},
-    {id: v1(), message: 'Yo'},
   ] as MessageType[],
   newMessageText: ''
 }
@@ -28,7 +27,7 @@ const DialogsState = {
 export const dialogsReducer = (state: DialogsStateType = DialogsState, action: DialogsReducerType): DialogsStateType => {
   switch (action.type) {
     case 'UPDATE-TEXT':
-      if (action.id === 'dialogs') {
+      if (action.id === TextareaId.Dialogs) {
         return {...state, newMessageText: action.value}
       }
       return state
@@ -41,7 +40,7 @@ export const dialogsReducer = (state: DialogsStateType = DialogsState, action: D
   }
 }
 
-export const updateTextAC = (id: string, value: string) => {
+export const updateText = (id: string, value: string) => {
   return {type: 'UPDATE-TEXT', id, value} as const
 }
-export const addMessageAC = () => ({type: 'ADD-MESSAGE'}) as const
+export const addMessage = () => ({type: 'ADD-MESSAGE'}) as const

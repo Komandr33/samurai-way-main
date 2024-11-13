@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Messages/Message';
-import {Textarea} from '../../Textarea/Textarea';
+import {Textarea, TextareaId} from '../../Textarea/Textarea';
 import {DialogsPropsType} from './DialogsContainer';
 
 
@@ -15,7 +15,7 @@ export const Dialogs = (props: DialogsPropsType) => {
     props.addMessage()
   }
   const updateTextHandler = (v: string) => {
-    props.updateText(v)
+    props.updateText(TextareaId.Dialogs, v)
   }
 
   return (
