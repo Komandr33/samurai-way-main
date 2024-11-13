@@ -1,10 +1,10 @@
 import React from 'react';
 import {addPost, ProfileStateType} from '../../../../redux/profile-reducer';
-import {updateTextAC} from '../../../../redux/dialogs-reducer';
+import {updateText} from '../../../../redux/dialogs-reducer';
 import {connect} from 'react-redux';
 import {MyPosts} from './MyPosts';
 import {Dispatch} from 'redux';
-import {AppPropsType} from '../../../../redux/store-redux';
+import {AppRootStateType} from '../../../../redux/store-redux';
 
 export type MyPostsPropsType = MapStateToPropsType & mapDispatchToPropsType
 
@@ -16,7 +16,7 @@ type mapDispatchToPropsType = {
   updateText: (v: string) => void
 }
 
-const mapStateToProps = (state: AppPropsType): MapStateToPropsType => {
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
   return {
     postsPage: state.profile
   }
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
       dispatch(addPost())
     },
     updateText: (v: string) => {
-      dispatch(updateTextAC('post', v))
+      dispatch(updateText('post', v))
     }
   }
 }

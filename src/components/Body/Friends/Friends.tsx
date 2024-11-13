@@ -1,9 +1,12 @@
+import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
 
 
-export const Friends = () => {
+const Friends = () => {
   return (
     <div>
       Friends
     </div>
   )
 }
+
+export const FriendsContainer = widthAuthRedirect(Friends);

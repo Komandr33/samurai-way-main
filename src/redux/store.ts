@@ -1,5 +1,4 @@
 import {addPost} from './profile-reducer';
-import {addMessageAC, updateTextAC} from './dialogs-reducer';
 
 // export type ActionType =
 //   ReturnType<typeof addPostAC>

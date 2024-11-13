@@ -7,7 +7,7 @@ type propsType = {
   updateText: (value: string) => void
 }
 
-export const Textarea: FC<propsType> = (props) => {
+export const Textarea = (props:propsType) => {
   // const newElement: RefObject<HTMLTextAreaElement> = React.createRef();  // it,s OLD method
   // const onClickHandler = () => {
   //   if (newElement.current?.value) {
@@ -34,4 +34,8 @@ export const Textarea: FC<propsType> = (props) => {
       <button title={props.buttonTitle} onClick={onClickHandler}>{props.buttonTitle}</button>
     </span>
   )
+}
+
+export enum TextareaId {
+  Dialogs = 'dialogs'
 }
