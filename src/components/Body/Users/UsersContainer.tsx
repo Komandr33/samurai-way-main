@@ -3,8 +3,8 @@ import {Users} from './Users';
 import {connect} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from '../../../redux/store-redux';
 import {getUsers, setCurrentPageTC, UsersStateType} from '../../../redux/users-reducer';
-import Preloader from '../../Preloader';
-import {widthAuthRedirect} from '../../../HOC/widthAuthRedirect';
+import Preloader from '../../../common/utils/Preloader';
+import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
 
 
 export type UsersContainerPropsType = UsersStateType & MapDispatchToPropsType

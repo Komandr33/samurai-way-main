@@ -4,8 +4,7 @@ import {AppRootStateType, useAppDispatch} from '../../../redux/store-redux';
 import {getUserProfile, ProfileStateType,} from '../../../redux/profile-reducer';
 import {Profile} from './Profile';
 import {useParams} from 'react-router-dom';
-import {widthAuthRedirect} from '../../../HOC/widthAuthRedirect';
-import {compose} from 'redux';
+import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
 
 type ProfileContainerPropsType = ProfileStateType & mapDispatchToPropsType
 

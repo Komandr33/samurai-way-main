@@ -1,4 +1,4 @@
-import {AppRootStateType} from '../redux/store-redux';
+import {AppRootStateType} from '../../redux/store-redux';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 

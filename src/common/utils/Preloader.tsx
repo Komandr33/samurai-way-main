@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import preloader from '../assets/images/spinning-circles.svg'
+import preloader from '../../assets/images/spinning-circles.svg'
 
 type PreloaderPropsType = {}
 

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Dialogs} from './Dialogs';
 import {addMessage, DialogsStateType, updateText} from '../../../redux/dialogs-reducer';
 import {AppRootStateType} from '../../../redux/store-redux';
-import {widthAuthRedirect} from '../../../HOC/widthAuthRedirect';
+import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
 
 export type DialogsPropsType = MapStateToPropsType & mapDispatchToPropsType
 
