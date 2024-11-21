@@ -12,7 +12,7 @@ export const Pagination = (props: Pagination) => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    const range = 2 ; // Количество страниц слева и справа от текущей страницы
+    const range = 5 ; // Количество страниц слева и справа от текущей страницы
 
     // Стрелка назад
     if (currentPage > 1) {
