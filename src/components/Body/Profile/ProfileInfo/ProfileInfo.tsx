@@ -3,13 +3,17 @@ import React, {ChangeEvent, useState} from 'react';
 import {ProfileType} from '../../../../redux/profile-reducer';
 import Preloader from '../../../../common/utils/Preloader';
 import {useAppDispatch} from '../../../../redux/store-redux';
+import {AnyAction} from 'redux';
 
 type ProfileInfoPropsType = {
   profile: ProfileType | null
   status: string | null
+  updateProfileStatus: (status: string) => AnyAction
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
+
+  const dispatch = useAppDispatch()
   let {profile, status} = {...props}
 
   let [editMode, setEditMode] = useState(false);
@@ -27,11 +31,16 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
     setInputValue(e.currentTarget.value);
   }
 
-  const onBlurHandler = () => {
+  const statusOnBlurHandler = () => {
     setEditMode(false);
-    let userId
-    userId = profile ? profile.userId : 2
-    // dispatch(getUserProfileStatus(userId, inputValue));
+    dispatch(props.updateProfileStatus(inputValue));
+  };
+
+  const statusOnKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setEditMode(false);
+      dispatch(props.updateProfileStatus(inputValue));
+    }
   };
 
   const profileImg = profile.photos.large ?? 'https://image.cnbcfm.com/api/v1/image/103260517-GettyImages-179798713_[1]_-_Copy.jpg?v=1529470293'
@@ -46,7 +55,11 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
         <div className={s.userStatus}>
           {!editMode ?
             <span onDoubleClick={statusOnClickHandler}>{status ? status : 'здесь должен быть ваш статус'}</span> :
-            <input autoFocus={true} value={inputValue} onChange={(e) => onChangeHandler(e)} onBlur={onBlurHandler}/>
+            <input autoFocus={true} value={inputValue}
+                   onChange={(e) => onChangeHandler(e)}
+                   onBlur={statusOnBlurHandler}
+                   onKeyDown={(e) => statusOnKeyDownHandler(e)}
+            />
           }
         </div>
         <img

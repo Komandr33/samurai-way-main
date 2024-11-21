@@ -1,16 +1,18 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from '../../../redux/store-redux';
-import {getUserProfile, getUserProfileStatus, ProfileStateType,} from '../../../redux/profile-reducer';
+import {getProfile, ProfileStateType, updateProfileStatus,} from '../../../redux/profile-reducer';
 import {Profile} from './Profile';
 import {useParams} from 'react-router-dom';
 import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
+import {AnyAction} from 'redux';
 
 export type ProfileContainerPropsType = ProfileStateType & mapDispatchToPropsType
 
 type mapDispatchToPropsType = {
-  getUserProfile: (userId: number) => void
-  getUserProfileStatus: (userId: number) => void
+  // getProfile: (userId: number) => AnyAction
+  // getProfileStatus: (userId: number) => AnyAction
+  updateProfileStatus: (status: string) => AnyAction
 }
 
 const ProfileWrapper = (props: ProfileContainerPropsType) => {
@@ -18,12 +20,12 @@ const ProfileWrapper = (props: ProfileContainerPropsType) => {
   const params = useParams<{ userId: string }>()
   let userId = Number(params.userId)
   if (!userId) {
-    userId = 2
+    userId = 30974
   }
 
   useEffect(() => {
     if(userId) {
-      dispatch(getUserProfile(userId));
+      dispatch(getProfile(userId));
     }
   }, [])
 
@@ -39,8 +41,7 @@ const mapStateToProps = (state: AppRootStateType): ProfileStateType => {
   }
 }
 export const ProfileContainer = connect(mapStateToProps, {
-  getUserProfile,
-  getUserProfileStatus
+  updateProfileStatus
 })(widthAuthRedirect(ProfileWrapper));
 
 // export const ProfileContainer = compose(
