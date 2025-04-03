@@ -1,16 +1,44 @@
+.profileContainer {
+
+}
+
 .background {
     width: 100%;
     max-height: 200px;
 }
 
-.user img {
-    width: 100px;
+.photoContainer{
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
 }
 
-.user {
-
+.photo {
+  border: 1px solid #ccc;
+  background-size: cover;
+  background-position: center;
+  width: 99%;
+  height: 99%;
+  border-radius: 50%;
 }
 
-.userStatus {
+.replaceButton{
+  position: absolute; /* Абсолютное позиционирование */
+  top: 0; /* К верхней части контейнера */
+  left: 0; /* К левой части контейнера */
+  width: 100%; /* Растягиваем до ширины контейнера */
+  height: 100%; /* Растягиваем до высоты контейнера */
+  /*opacity: 0.3; !* Полупрозрачность *!*/
+  background-color: rgba(0, 0, 0, 0.3); /* Полупрозрачность */
+  border-radius: 50%;
+  /*pointer-events: none; !* Отключаем события мыши для верхнего изображения (если нужно) *!*/
+  color: red;
+}
+.replaceButton div {
+  color: white; /* Непрозрачный белый цвет текста */
+}
+
+.profileStatus {
 
 }
