@@ -27,10 +27,9 @@ export const PATH = {
   USERS: '/users',
   LOGIN: '/login',
   ERROR: '/error'
-}
+} as const
 
 export const App = () => {
-
   return (
     <div className={'app-wrapper'}>
       <HeaderContainer/>

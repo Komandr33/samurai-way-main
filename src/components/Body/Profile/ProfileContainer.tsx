@@ -1,18 +1,17 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {AppRootStateType, useAppDispatch} from '../../../redux/store-redux';
+import {AppRootStateType, AppThunk, useAppDispatch} from '../../../redux/store-redux';
 import {getProfile, ProfileStateType, updateProfileStatus,} from '../../../redux/profile-reducer';
 import {Profile} from './Profile';
 import {useParams} from 'react-router-dom';
 import {widthAuthRedirect} from '../../../common/HOC/widthAuthRedirect';
-import {AnyAction} from 'redux';
 
 export type ProfileContainerPropsType = ProfileStateType & mapDispatchToPropsType
 
 type mapDispatchToPropsType = {
   // getProfile: (userId: number) => AnyAction
   // getProfileStatus: (userId: number) => AnyAction
-  updateProfileStatus: (status: string) => AnyAction
+  updateProfileStatus: (status: string) => AppThunk
 }
 
 const ProfileWrapper = (props: ProfileContainerPropsType) => {

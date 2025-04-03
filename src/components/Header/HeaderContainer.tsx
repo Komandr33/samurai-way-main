@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Header} from './Header';
-import {AuthStateType, getAuthUserData} from '../../redux/auth-reducer';
+import {AuthStateType, meTC} from '../../redux/auth-reducer';
 import {connect} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from '../../redux/store-redux';
 
@@ -15,7 +15,7 @@ export function HeaderWrapper(props: HeaderContainerPropsType) {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getAuthUserData());
+    dispatch(meTC());
   }, [])
 
   return <Header {...props}/>

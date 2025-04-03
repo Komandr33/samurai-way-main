@@ -6,7 +6,8 @@ type ProfileReducerType =
   ReturnType<typeof updateText> |
   ReturnType<typeof addPost> |
   ReturnType<typeof setProfile> |
-  ReturnType<typeof setProfileStatus>
+  ReturnType<typeof setProfileStatus> |
+  ReturnType<typeof setProfilePhoto>
 
 type ProfileContactsType = {
   facebook: string | null
@@ -25,16 +26,18 @@ export type PostType = {
   likes: number
 }
 
+export type PhotosType = {
+  large: string
+  small: string
+}
+
 export type ProfileType = {
   aboutMe: string
   contacts: ProfileContactsType
   fullName: string
   lookingForAJob: boolean
   lookingForAJobDescription: string
-  photos: {
-    large: string
-    small: string
-  }
+  photos: PhotosType
   userId: number
 }
 
@@ -72,6 +75,11 @@ export function profileReducer(state: ProfileStateType = ProfileState, action: P
       return {...state, profile: action.profile}
     case 'SET-PROFILE-STATUS':
       return {...state, status: action.status}
+    case 'SET-PROFILE-PHOTO':
+      if (state.profile) {
+        return {...state, profile: {...state.profile, photos: action.photos}}
+      }
+      return state
     default :
       return state
   }
@@ -84,6 +92,7 @@ export const updateText = (id: string, value: string) => {
 export const addPost = () => ({type: 'ADD-POST'}) as const
 export const setProfile = (profile: ProfileType) => ({type: 'SET-PROFILE', profile}) as const
 export const setProfileStatus = (status: string) => ({type: 'SET-PROFILE-STATUS', status}) as const
+export const setProfilePhoto = (photos: PhotosType) => ({type: 'SET-PROFILE-PHOTO', photos}) as const
 
 //thunks
 export const getProfile = (userId: number) => (dispatch: AppThunkDispatch) => {
@@ -106,6 +115,15 @@ export const updateProfileStatus = (status: string) => (dispatch: AppThunkDispat
     .then(data => {
       if (data.resultCode === 0) {
         dispatch(setProfileStatus(status));
+      }
+    }).catch(err => console.log(err.message))
+}
+
+export const updateProfilePhoto = (photo: string) => (dispatch: AppThunkDispatch) => {
+  profileAPI.updateProfilePhoto(photo)
+    .then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setProfilePhoto(data));
       }
     }).catch(err => console.log(err.message))
 }
